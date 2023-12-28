@@ -54,16 +54,36 @@ export async function POST(req: Request) {
     const eventType = evt.type;
    
     if(eventType === 'user.created') {
-        await db.user.create({
-            data: {
-                externalUserId: payload.data.id,
-                username: payload.data.username,
-                imageUrl: payload.data.image_url,
-                phoneNumber: payload.data.phone_numbers[0].phone_number,
-            }
-        })
+      await db.user.create({
+          data: {
+              externalUserId: payload.data.id,
+              username: payload.data.username,
+              imageUrl: payload.data.image_url,
+              phoneNumber: payload.data.phone_numbers[0].phone_number,
+          }
+      })
     }
 
+    if(eventType === 'user.updated') {
+      await db.user.update({
+        where: {
+          externalUserId: payload.data.id,
+        },
+        data: {
+          username: payload.data.username,
+          imageUrl: payload.data.image_url,
+          phoneNumber: payload.data.phone_numbers[0].phone_number,
+        }
+      })
+    }
+
+    if(eventType === 'user.deleted') {
+      await db.user.delete({
+        where: {
+          externalUserId: payload.data.id,
+        }
+      })
+    }
    
     return new Response('', { status: 200 })
   }
