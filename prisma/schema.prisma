@@ -17,8 +17,6 @@ model User {
   firstName       String?
   lastName        String?
   username        String   @unique
-  email           String?   @unique
-  emailVerified   DateTime?
   phoneNumber     String   @unique
   imageUrl        String?
   externalUserId  String   @unique
