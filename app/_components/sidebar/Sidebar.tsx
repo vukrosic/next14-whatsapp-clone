@@ -13,7 +13,7 @@ async function Sidebar({ children }: {
 
   return (
     <div className="h-full">
-      <DesktopSidebar currentUser={currentUserPrisma!} />
+      {/* <DesktopSidebar currentUser={currentUserPrisma!} /> */}
       <MobileFooter />
       <main className="lg:pl-20 h-full">
         {children}

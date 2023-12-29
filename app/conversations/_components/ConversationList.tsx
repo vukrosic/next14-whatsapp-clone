@@ -15,6 +15,8 @@ import GroupChatModal from "@/app/_components/modals/GroupChatModal";
 import ConversationBox from "./ConversationBox";
 import { FullConversationType } from "@/app/types";
 
+import { removePlusSign } from "@/app/utils/phoneNumberUtils";
+
 interface ConversationListProps {
   initialItems: FullConversationType[];
   users: User[];
@@ -33,8 +35,13 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const { conversationId, isOpen } = useConversation();
 
+  
   const pusherKey = useMemo(() => {
-    return session?.session?.user.phoneNumbers[0].phoneNumber
+    if (!session?.session?.user.phoneNumbers[0].phoneNumber) {
+      return null;
+    }
+    const phoneNumber = removePlusSign(session?.session?.user.phoneNumbers[0].phoneNumber);
+    return phoneNumber
   }, [session?.session?.user.phoneNumbers[0].phoneNumber])
 
   useEffect(() => {
