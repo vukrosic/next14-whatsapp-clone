@@ -34,7 +34,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
   const session = useSession();
 
   const { conversationId, isOpen } = useConversation();
-
+  
   
   const pusherKey = useMemo(() => {
     if (!session?.session?.user.phoneNumbers[0].phoneNumber) {
@@ -93,12 +93,12 @@ const ConversationList: React.FC<ConversationListProps> = ({
         onClose={() => setIsModalOpen(false)}
       />
       <aside className={clsx(`
-        fixed 
+        fixed  // this should not exist
         inset-y-0 
         pb-20
         lg:pb-0
-        lg:left-20 
-        lg:w-80 
+        lg:w-80 // this should be in sidebar not here
+        lg:mt-20
         lg:block
         overflow-y-auto 
         border-r 

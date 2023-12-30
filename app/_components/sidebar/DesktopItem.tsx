@@ -1,52 +1,27 @@
 import clsx from 'clsx';
 import Link from "next/link";
+import Button from '../Button';
+import Image from 'next/image';
 
 interface DesktopItemProps {
   label: string;
-  icon: any;
-  href: string;
-  onClick?: () => void;
+  icon: string;
   active?: boolean;
 }
 
-const DesktopItem: React.FC<DesktopItemProps> = ({ 
-  label, 
-  href, 
-  icon: Icon, 
-  active,
-  onClick
+const DesktopItem: React.FC<DesktopItemProps> = ({
+  label,
+  icon,
+  active
 }) => {
-  const handleClick = () => {
-    if (onClick) {
-      return onClick();
-    }
-  };
 
-  return ( 
-    <li onClick={handleClick} key={label}>
-      <Link
-        href={href}
-        className={clsx(`
-            group 
-            flex 
-            gap-x-3 
-            rounded-md 
-            p-3 
-            text-sm 
-            leading-6 
-            font-semibold 
-            text-gray-500 
-            hover:text-black 
-            hover:bg-gray-100
-          `,
-            active && 'bg-gray-100 text-black'
-          )}
-      >
-        <Icon className="h-6 w-6 shrink-0" aria-hidden="true" />
-        <span className="sr-only">{label}</span>
-      </Link>
+  return (
+    <li key={label}>
+      <div className='group flex rounded-md p-2 text-sm leading-6 active:bg-slate-950'>
+        <Image className='hover:cursor-pointer' src={icon} alt={label} width={24} height={24} />
+      </div>
     </li>
-   );
+  );
 }
- 
+
 export default DesktopItem;

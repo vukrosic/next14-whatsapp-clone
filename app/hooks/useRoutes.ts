@@ -5,31 +5,37 @@ import { HiArrowLeftOnRectangle, HiUsers } from 'react-icons/hi2';
 import { useClerk } from '@clerk/clerk-react';
 import { useRouter } from "next/navigation";
 import useConversation from "./useConversation";
+import ChatIcon from '/public/images/omg.svg';
 
 const useRoutes = () => {
   const pathname = usePathname();
   const { conversationId } = useConversation();
   const { signOut } = useClerk();
-  const router = useRouter()
+  const router = useRouter();
+
 
   const routes = useMemo(() => [
-    { 
-      label: 'Chat', 
-      href: '/conversations', 
-      icon: HiChat,
+    {
+      label: 'Comomunities',
+      icon: '/images/Communities.svg',
       active: pathname === '/conversations' || !!conversationId
     },
-    { 
-      label: 'Users', 
-      href: '/users', 
-      icon: HiUsers, 
+    {
+      label: 'Status',
+      icon: '/images/Status.svg',
       active: pathname === '/users'
     },
     {
-      label: 'Logout', 
-      onClick: () => signOut(() => router.push("/")),
-      href: '#',
-      icon: HiArrowLeftOnRectangle, 
+      label: 'Channels',
+      icon: '/images/Channels.svg',
+    },
+    {
+      label: 'New chat',
+      icon: '/images/New chat.svg',
+    },
+    {
+      label: 'Menu',
+      icon: '/images/Menu.svg',
     }
   ], [pathname, conversationId]);
 
