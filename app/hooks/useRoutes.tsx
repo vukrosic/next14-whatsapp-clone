@@ -6,6 +6,7 @@ import { useClerk } from '@clerk/clerk-react';
 import { useRouter } from "next/navigation";
 import useConversation from "./useConversation";
 import ChatIcon from '/public/images/omg.svg';
+import StatusSheet from "@/app/_components/sidebar/sheets/StatusSheet";
 
 const useRoutes = () => {
   const pathname = usePathname();
@@ -18,7 +19,8 @@ const useRoutes = () => {
     {
       label: 'Comomunities',
       icon: '/images/Communities.svg',
-      active: pathname === '/conversations' || !!conversationId
+      active: pathname === '/conversations' || !!conversationId,
+      button: <StatusSheet />
     },
     {
       label: 'Status',

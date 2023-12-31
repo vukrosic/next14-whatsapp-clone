@@ -12,8 +12,8 @@ const MobileFooter = () => {
     return null;
   }
 
-  return ( 
-    <div 
+  return (
+    <div
       className="
         fixed 
         justify-between 
@@ -27,7 +27,7 @@ const MobileFooter = () => {
         lg:hidden
       "
     >
-      {routes.map((route) => (
+      {/* {routes.map((route) => (
         <MobileItem 
           key={route.href} 
           href={route.href} 
@@ -35,9 +35,9 @@ const MobileFooter = () => {
           icon={route.icon}
           onClick={route.onClick}
         />
-      ))}
+      ))} */}
     </div>
-   );
+  );
 }
- 
+
 export default MobileFooter;

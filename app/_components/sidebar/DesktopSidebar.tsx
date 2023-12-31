@@ -6,6 +6,9 @@ import useRoutes from "@/app/hooks/useRoutes";
 import { useState } from "react";
 import { User } from "@prisma/client";
 import Avatar from "../Avatar";
+import CommunitiesDrawer from "./sheets/CommunitiesSheet";
+import StatusDrawer from "./sheets/StatusSheet";
+
 
 interface DesktopSidebarProps {
   currentUser: User
@@ -44,7 +47,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
                 key={item.label}
                 label={item.label}
                 icon={item.icon}
-                active={item.active}
+                button={item.button}
               />
             ))}
           </ul>
