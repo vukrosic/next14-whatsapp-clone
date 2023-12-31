@@ -6,7 +6,11 @@ import { useClerk } from '@clerk/clerk-react';
 import { useRouter } from "next/navigation";
 import useConversation from "./useConversation";
 import ChatIcon from '/public/images/omg.svg';
+import CommunitiesSheet from "@/app/_components/sidebar/sheets/CommunitiesSheet";
 import StatusSheet from "@/app/_components/sidebar/sheets/StatusSheet";
+import ChannelsSheet from "@/app/_components/sidebar/sheets/ChannelsSheet";
+import NewChatSheet from "@/app/_components/sidebar/sheets/NewChatSheet";
+
 
 const useRoutes = () => {
   const pathname = usePathname();
@@ -17,27 +21,16 @@ const useRoutes = () => {
 
   const routes = useMemo(() => [
     {
-      label: 'Comomunities',
-      icon: '/images/Communities.svg',
-      active: pathname === '/conversations' || !!conversationId,
+      button: <CommunitiesSheet />
+    },
+    {
       button: <StatusSheet />
     },
     {
-      label: 'Status',
-      icon: '/images/Status.svg',
-      active: pathname === '/users'
+      button: <ChannelsSheet />
     },
     {
-      label: 'Channels',
-      icon: '/images/Channels.svg',
-    },
-    {
-      label: 'New chat',
-      icon: '/images/New chat.svg',
-    },
-    {
-      label: 'Menu',
-      icon: '/images/Menu.svg',
+      button: <NewChatSheet />
     }
   ], [pathname, conversationId]);
 

@@ -17,7 +17,7 @@ import useActiveList from "@/app/hooks/useActiveList"
 import { getCurrentUser } from "@/app/actions/getCurrentUser"
 import Image from "next/image"
 
-const StatusSheet = () => {
+const NewChatSheet = () => {
     // const { members } = useActiveList();
     // const { currentUserPrisma } = getCurrentUser();
     // const isActive = members.indexOf(currentUserPrisma?.phoneNumber!) !== -1;
@@ -27,7 +27,7 @@ const StatusSheet = () => {
         <Sheet>
             <SheetTrigger asChild>
                 <button>
-                    <Image className='hover:cursor-pointer' src='images/Status.svg' alt="Status" width={24} height={24} />
+                    <Image className='hover:cursor-pointer' src='images/NewChat.svg' alt="New Chat" width={24} height={24} />
                 </button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[400px] sm:w-[540px] p-0">
@@ -82,4 +82,4 @@ const StatusSheet = () => {
     )
 }
 
-export default StatusSheet;
+export default NewChatSheet;

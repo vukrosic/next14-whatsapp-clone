@@ -6,24 +6,16 @@ import StatusSheet from './sheets/StatusSheet';
 
 
 interface DesktopItemProps {
-  label: string;
-  icon: string;
-  active?: boolean;
-  button?: React.ReactNode;
+  button: React.ReactNode;
 }
 
 const DesktopItem: React.FC<DesktopItemProps> = ({
-  label,
-  icon,
-  active,
   button
 }) => {
 
   return (
-    <li key={label}>
-      <div className='group flex rounded-md p-2 text-sm leading-6 active:bg-slate-950'>
-        {button}
-      </div>
+    <li>
+      {button}
     </li>
   );
 }

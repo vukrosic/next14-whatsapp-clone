@@ -8,6 +8,11 @@ import { User } from "@prisma/client";
 import Avatar from "../Avatar";
 import CommunitiesDrawer from "./sheets/CommunitiesSheet";
 import StatusDrawer from "./sheets/StatusSheet";
+import CommunitiesSheet from "./sheets/CommunitiesSheet";
+import StatusSheet from "./sheets/StatusSheet";
+import ChannelsSheet from "./sheets/ChannelsSheet";
+import NewChatSheet from "./sheets/NewChatSheet";
+import ProfileSheet from "./sheets/ProfileSheet";
 
 
 interface DesktopSidebarProps {
@@ -25,32 +30,27 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
       {/* <SettingsModal currentUser={currentUser} isOpen={isOpen} onClose={() => setIsOpen(false)} /> */}
       <div className="
       bg-[#f5f0f0]
-        hidden 
-        lg:left-0 
-        lg:overflow-y-auto 
-        lg:border-r-[2px]
-        lg:flex
+        left-0 
+        overflow-y-auto 
+        border-r-[2px]
+        flex
         justify-between
+        items-center
       ">
-        <nav className="mt-4 flex flex-col justify-between items-center">
+        <nav>
           <div
             onClick={() => setIsOpen(true)}
-            className="cursor-pointer hover:opacity-75 transition"
+            className="flex items-center cursor-pointer hover:opacity-75 transition mt-2 ml-2"
           >
-            <Avatar user={currentUser} />
+            <ProfileSheet currentUser={currentUser} />
           </div>
         </nav>
-        <nav className="flex justify-between ml-20">
-          <ul role="list" className="flex items-center space-y-1">
-            {routes.map((item) => (
-              <DesktopItem
-                key={item.label}
-                label={item.label}
-                icon={item.icon}
-                button={item.button}
-              />
-            ))}
-          </ul>
+        <nav className="flex justify-between ml-20 space-x-5 items-center">
+          <CommunitiesSheet />
+          <StatusSheet />
+          <ChannelsSheet />
+          <NewChatSheet />
+          <img src="/images/Menu.svg" alt="Menu" className="h-6 w-6" />
         </nav>
       </div>
     </>

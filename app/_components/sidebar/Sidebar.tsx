@@ -26,7 +26,7 @@ async function Sidebar({ children }: {
             title="Messages" 
             initialItems={conversations}
           /> */}
-        </aside>
+      </aside>
       <MobileFooter />
       <main className="h-full">
         {children}
