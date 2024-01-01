@@ -27,7 +27,6 @@ interface ProfileSheetProps {
 const ProfileSheet = (
     { currentUser }: ProfileSheetProps
 ) => {
-
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -35,13 +34,13 @@ const ProfileSheet = (
                     <Avatar user={currentUser} />
                 </button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[330px] p-0">
+            <SheetContent side="left" className="w-[430px] p-0">
                 <SheetHeader className="bg-[#008069]">
-                    <div className="flex mt-20">
+                    <div className="flex mt-14 mb-3">
                         <SheetClose asChild>
-                            <img src="images/ArrowLeft.svg" className="mr-7 cursor-pointer" />
+                            <img src="images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
                         </SheetClose>
-                        <SheetTitle className="text-white flex items-center justify-center ">Profile</SheetTitle>
+                        <SheetTitle className="text-white flex items-center justify-center ">Status</SheetTitle>
                     </div>
                 </SheetHeader>
                 <button className="flex m-6 relative">

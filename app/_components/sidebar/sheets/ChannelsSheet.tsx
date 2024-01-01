@@ -30,53 +30,81 @@ const ChannelsSheet = () => {
                     <Image className='hover:cursor-pointer' src='images/Channels.svg' alt="Channels" width={24} height={24} />
                 </button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[400px] sm:w-[540px] p-0">
+            <SheetContent side="left" className="w-[330px] sm:w-[540px] p-0">
                 <SheetHeader className="bg-[#008069]">
-                    <div className="flex mt-20">
+                    <div className="flex mt-14 mb-3">
                         <SheetClose asChild>
-                            <img src="images/ArrowLeft.svg" className="mr-7 cursor-pointer" />
+                            <img src="images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
                         </SheetClose>
-                        <SheetTitle className="text-white flex items-center justify-center ">Status</SheetTitle>
+                        <SheetTitle className="text-white flex items-center justify-center ">Channels</SheetTitle>
                         <div className="flex ml-auto">
-                            <img src="images/Plus.svg" className="p-2 cursor-pointer" />
-                            <img src="images/MenuWhite.svg" className="p-2 cursor-pointer" />
+                            <img src="images/Plus.svg" className="p-2 cursor-pointer mr-4" />
                         </div>
                     </div>
                 </SheetHeader>
-                <button className="flex m-6 relative">
-                    <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    {isActive ? (
-                        <span
-                            className="
-                            absolute
-                            block
-                            rounded-full 
-                            bg-green-500 
-                            top-6
-                            left-8
-                            ring-2 
-                            ring-white 
-                            h-2 
-                            w-2 
-                            md:h-3 
-                            md:w-3
-                        "
-                        />
-                    ) : null}
-                    <div className="ml-4 text-left">
-                        <h4 className="text-[1rem]">My Status</h4>
-                        <p className="text-muted-foreground text-[0.8125rem]">Add to my status</p>
+
+                <div className="text-center w-[350px]">
+                    <h4 className="text-[1.1875rem] m-5">Stay updated on your favourite topics</h4>
+                    <p className="text-muted-foreground text-[1.0625rem] mb-5">Find channels to follow below</p>
+                </div>
+
+                <div>
+                    <div className="flex justify-center">
+                        <button className="flex flex-col w-[112px] h-[144.8px] m-1 items-center content-center border-[1px] rounded-xl p-2 justify-center">
+                            <div className="flex flex-col items-center relative">
+                                <Avatar className="w-16 h-16">
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <img src="images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
+
+                                <h4 className="text-[0.8125rem]">The Atlantic</h4>
+                                <p className="text-muted-foreground text-[0.875rem]">Follow</p>
+                            </div>
+                        </button>
+                        <button className="flex flex-col w-[112px] h-[144.8px] m-1 items-center content-center border-[1px] rounded-xl p-2 justify-center">
+                            <div className="flex flex-col items-center relative">
+                                <Avatar className="w-16 h-16">
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <img src="images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
+
+                                <h4 className="text-[0.8125rem]">The Atlantic</h4>
+                                <p className="text-muted-foreground text-[0.875rem]">Follow</p>
+                            </div>
+                        </button>
                     </div>
-                </button>
-                <SheetFooter>
-                    <div className="flex m-auto">
-                        <img src="images/Padlock.svg" className="m-auto" />
-                        <p className="text-[12px]">Your status updates are <span className="text-blue-500 text-[12px]">end-to-end encrypted</span></p>
+                    <div className="flex justify-center">
+                        <button className="flex flex-col w-[112px] h-[144.8px] m-1 items-center content-center border-[1px] rounded-xl p-2 justify-center">
+                            <div className="flex flex-col items-center relative">
+                                <Avatar className="w-16 h-16">
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <img src="images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
+
+                                <h4 className="text-[0.8125rem]">The Atlantic</h4>
+                                <p className="text-muted-foreground text-[0.875rem]">Follow</p>
+                            </div>
+                        </button>
+                        <button className="flex flex-col w-[112px] h-[144.8px] m-1 items-center content-center border-[1px] rounded-xl p-2 justify-center">
+                            <div className="flex flex-col items-center relative">
+                                <Avatar className="w-16 h-16">
+                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <img src="images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
+
+                                <h4 className="text-[0.8125rem]">The Atlantic</h4>
+                                <p className="text-muted-foreground text-[0.875rem]">Follow</p>
+                            </div>
+                        </button>
                     </div>
-                </SheetFooter>
+                </div>
+                <Button className="flex w-[133.66px] h-[38px] rounded-full m-auto mt-3 bg-[#008069] hover:bg-[#017660] hover:cursor-pointer">
+                    Find Channels
+                </Button>
             </SheetContent>
         </Sheet>
     )

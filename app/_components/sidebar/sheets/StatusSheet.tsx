@@ -30,14 +30,14 @@ const StatusSheet = () => {
                     <Image className='hover:cursor-pointer' src='images/Status.svg' alt="Status" width={24} height={24} />
                 </button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[400px] sm:w-[540px] p-0">
+            <SheetContent side="left" className="w-[370px] p-0">
                 <SheetHeader className="bg-[#008069]">
-                    <div className="flex mt-20">
+                    <div className="flex mt-14 mb-3">
                         <SheetClose asChild>
-                            <img src="images/ArrowLeft.svg" className="mr-7 cursor-pointer" />
+                            <img src="images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
                         </SheetClose>
                         <SheetTitle className="text-white flex items-center justify-center ">Status</SheetTitle>
-                        <div className="flex ml-auto">
+                        <div className="flex ml-auto w-[90px] h-[40px]">
                             <img src="images/Plus.svg" className="p-2 cursor-pointer" />
                             <img src="images/MenuWhite.svg" className="p-2 cursor-pointer" />
                         </div>
