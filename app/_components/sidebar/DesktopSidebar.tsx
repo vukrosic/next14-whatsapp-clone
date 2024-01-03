@@ -13,6 +13,17 @@ import StatusSheet from "./sheets/StatusSheet";
 import ChannelsSheet from "./sheets/ChannelsSheet";
 import NewChatSheet from "./sheets/NewChatSheet";
 import ProfileSheet from "./sheets/ProfileSheet";
+import NewChannelSheet from "./sheets/NewChannelSheet";
+import FindChannelsSheet from "./sheets/FindChannelsSheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import ConversationList from "@/app/conversations/_components/ConversationList";
 
 
 interface DesktopSidebarProps {
@@ -50,7 +61,23 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
           <StatusSheet />
           <ChannelsSheet />
           <NewChatSheet />
-          <img src="/images/Menu.svg" alt="Menu" className="h-6 w-6" />
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <img
+                src="/images/Menu.svg"
+                alt="Menu"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-52">
+              <DropdownMenuItem className="p-3">New group</DropdownMenuItem>
+              <DropdownMenuItem className="p-3">New community</DropdownMenuItem>
+              <DropdownMenuItem className="p-3">Starred messages</DropdownMenuItem>
+              <DropdownMenuItem className="p-3">Select chats</DropdownMenuItem>
+              <DropdownMenuItem className="p-3">Settings</DropdownMenuItem>
+              <DropdownMenuItem className="p-3">Log out</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
       </div>
     </>

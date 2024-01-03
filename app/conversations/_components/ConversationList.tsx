@@ -23,8 +23,8 @@ interface ConversationListProps {
   title?: string;
 }
 
-const ConversationList: React.FC<ConversationListProps> = ({ 
-  initialItems, 
+const ConversationList: React.FC<ConversationListProps> = ({
+  initialItems,
   users
 }) => {
   const [items, setItems] = useState(initialItems);
@@ -34,8 +34,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
   const session = useSession();
 
   const { conversationId, isOpen } = useConversation();
-  
-  
+
+
   const pusherKey = useMemo(() => {
     if (!session?.session?.user.phoneNumbers[0].phoneNumber) {
       return null;
@@ -87,30 +87,19 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   return (
     <>
-      <GroupChatModal 
-        users={users} 
-        isOpen={isModalOpen} 
+      <GroupChatModal
+        users={users}
+        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-      <aside className={clsx(`
-        fixed  // this should not exist
-        inset-y-0 
-        pb-20
-        lg:pb-0
-        lg:w-80 // this should be in sidebar not here
-        lg:mt-20
-        lg:block
-        overflow-y-auto 
-        border-r 
-        border-gray-200 
-      `, isOpen ? 'hidden' : 'block w-full left-0')}>
-        <div className="px-5">
-          <div className="flex justify-between mb-4 pt-4">
+      <aside>
+        <div className="bg-yellow-500">
+          {/* <div className="flex justify-between mb-4 pt-4">
             <div className="text-2xl font-bold text-neutral-800">
               Messages
             </div>
-            <div 
-              onClick={() => setIsModalOpen(true)} 
+            <div
+              onClick={() => setIsModalOpen(true)}
               className="
                 rounded-full 
                 p-2 
@@ -123,7 +112,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
             >
               <MdOutlineGroupAdd size={20} />
             </div>
-          </div>
+          </div> */}
           {items.map((item) => (
             <ConversationBox
               key={item.id}
@@ -134,7 +123,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
         </div>
       </aside>
     </>
-   );
+  );
 }
- 
+
 export default ConversationList;

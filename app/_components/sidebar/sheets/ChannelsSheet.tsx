@@ -16,6 +16,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import useActiveList from "@/app/hooks/useActiveList"
 import { getCurrentUser } from "@/app/actions/getCurrentUser"
 import Image from "next/image"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import NewChannelSheet from "./NewChannelSheet"
+
 
 const ChannelsSheet = () => {
     // const { members } = useActiveList();
@@ -38,7 +48,18 @@ const ChannelsSheet = () => {
                         </SheetClose>
                         <SheetTitle className="text-white flex items-center justify-center ">Channels</SheetTitle>
                         <div className="flex ml-auto">
-                            <img src="images/Plus.svg" className="p-2 cursor-pointer mr-4" />
+                            <DropdownMenu>
+                                <DropdownMenuTrigger>
+                                    <img src="images/Plus.svg" className="p-2 cursor-pointer mr-4" />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                    <DropdownMenuItem className="p-4 cursor-pointer">
+                                        <NewChannelSheet />
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem className="p-4 cursor-pointer">Find channels</DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+
                         </div>
                     </div>
                 </SheetHeader>
