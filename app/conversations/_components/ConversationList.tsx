@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { useSession } from "@clerk/nextjs";
 
 import { useEffect, useMemo, useState } from "react";
-import { MdOutlineGroupAdd } from 'react-icons/md';
-import clsx from "clsx";
 import { find, uniq } from 'lodash';
 
 import useConversation from "@/app/hooks/useConversation";
@@ -16,6 +14,7 @@ import ConversationBox from "./ConversationBox";
 import { FullConversationType } from "@/app/types";
 
 import { removePlusSign } from "@/app/utils/phoneNumberUtils";
+import { Input } from "@/components/ui/input";
 
 interface ConversationListProps {
   initialItems: FullConversationType[];
@@ -28,7 +27,26 @@ const ConversationList: React.FC<ConversationListProps> = ({
   users
 }) => {
   const [items, setItems] = useState(initialItems);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFilterActivated, setIsFilterActivated] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
+  const filterImageSrc = isFilterActivated ? 'images/FilterWhite.svg' : 'images/Filter.svg';
+
+  const handleFilterClick = () => {
+    setIsFilterActivated(!isFilterActivated);
+  };
+
+
+  const filteredItems = useMemo(() => {
+    return items.filter((item) =>
+      item.users.some(user =>
+        user.username.toLowerCase().includes(searchText.toLowerCase())
+      )
+    );
+  }, [items, searchText]);
+
 
   const router = useRouter();
   const session = useSession();
@@ -85,6 +103,11 @@ const ConversationList: React.FC<ConversationListProps> = ({
     pusherClient.bind('conversation:remove', removeHandler)
   }, [pusherKey, router]);
 
+
+
+
+
+
   return (
     <>
       <GroupChatModal
@@ -93,27 +116,26 @@ const ConversationList: React.FC<ConversationListProps> = ({
         onClose={() => setIsModalOpen(false)}
       />
       <aside>
-        <div className="bg-yellow-500">
-          {/* <div className="flex justify-between mb-4 pt-4">
-            <div className="text-2xl font-bold text-neutral-800">
-              Messages
+        <div>
+          <div className="space-y-2 flex">
+            <div className="flex bg-gray-200 w-11/12 m-auto rounded-xl mt-2 ml-3">
+              <img src="images/Search.svg" className="ml-3" />
+              <Input
+                placeholder="Search or start a new chat"
+                className="bg-transparent border-0"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
             </div>
-            <div
-              onClick={() => setIsModalOpen(true)}
-              className="
-                rounded-full 
-                p-2 
-                bg-gray-100 
-                text-gray-600 
-                cursor-pointer 
-                hover:opacity-75 
-                transition
-              "
-            >
-              <MdOutlineGroupAdd size={20} />
+            <div className={` rounded-full flex items-center justify-center mr-2 ml-2 ${isFilterActivated ? 'bg-primary' : ''}`}>
+              <img
+                src={filterImageSrc}
+                className='mr-3 ml-3'
+                onClick={handleFilterClick}
+              />
             </div>
-          </div> */}
-          {items.map((item) => (
+          </div>
+          {filteredItems.map((item) => (
             <ConversationBox
               key={item.id}
               data={item}

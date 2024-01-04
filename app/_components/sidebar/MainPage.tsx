@@ -1,13 +1,13 @@
 import { getCurrentUser } from '@/app/actions/getCurrentUser';
 
-import DesktopSidebar from './DesktopSidebar';
+import DesktopSidebarHeader from './DesktopSidebar';
 import MobileFooter from './MobileFooter';
 import ConversationList from '@/app/conversations/_components/ConversationList';
 import getConversations from '@/app/actions/getConversations';
 import getUsers from '@/app/actions/getUsers';
 import { Input } from '@/components/ui/input';
 
-async function Sidebar({ children }: {
+async function MainPage({ children }: {
   children: React.ReactNode,
 }) {
   const {
@@ -18,22 +18,9 @@ async function Sidebar({ children }: {
   const users = await getUsers();
 
   return (
-    <div className="h-full flex">
+    <div className="h-full w-screen flex">
       <aside className="h-full">
-        <DesktopSidebar currentUser={currentUserPrisma!} />
-        <div>
-          <div className="space-y-2 flex">
-            <div className="flex bg-gray-200 w-11/12 m-auto rounded-xl mt-2">
-              <img src="images/Search.svg" className="ml-3" />
-              <Input placeholder="Search or start a new chat" className="w-11/12 bg-transparent border-0" />
-            </div>
-            <img src="images/Filter.svg" className="ml-auto mr-2" />
-            <div>
-
-            </div>
-
-          </div>
-        </div>
+        <DesktopSidebarHeader currentUser={currentUserPrisma!} />
         <ConversationList
           users={users}
           title="Messages"
@@ -41,7 +28,7 @@ async function Sidebar({ children }: {
         />
       </aside>
       <MobileFooter />
-      <main className="h-full">
+      <main className='w-full flex justify-center'>
         {children}
       </main>
     </div>
@@ -49,4 +36,4 @@ async function Sidebar({ children }: {
 }
 
 
-export default Sidebar;
+export default MainPage;

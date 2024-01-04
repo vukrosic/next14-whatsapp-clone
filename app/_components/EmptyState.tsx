@@ -1,26 +1,28 @@
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
 const EmptyState = () => {
-    return ( 
-      <div 
+  return (
+    <div>
+      <div
         className="
-          px-4 
-          py-10 
-          sm:px-6 
-          lg:px-8 
-          lg:py-6 
-          h-full 
-          flex 
+          flex
+          flex-col
+          w-full
           justify-center 
-          items-center 
-          bg-gray-100
+          items-center
         "
       >
-        <div className="text-center items-center flex flex-col">
-          <h3 className="mt-2 text-2xl font-semibold text-gray-900">
-            Select a chat or start a new conversation
-          </h3>
-        </div>
+        <img src="images/Communities.svg" className="w-1/2 mt-36" />
+        <h2 className="text-3xl m-12 mt-4 mb-4 text-muted-foreground">WhatsApp Clone</h2>
+        <Separator />
+        <h3 className="text-foreground-muted text-xl font-semibold text-gray-900">
+          Select a chat or start a new conversation
+        </h3>
+        <Button className="m-8">New Chat</Button>
       </div>
-    );
-  }
-   
-  export default EmptyState;
+    </div>
+  );
+}
+
+export default EmptyState;

@@ -16,7 +16,7 @@ interface BodyProps {
 const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
-  
+
   const { conversationId } = useConversation();
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
 
         return [...current, message]
       });
-      
+
       bottomRef?.current?.scrollIntoView();
     };
 
@@ -46,11 +46,11 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
         if (currentMessage.id === newMessage.id) {
           return newMessage;
         }
-  
+
         return currentMessage;
       }))
     };
-  
+
     // executes on mount or when conversationId changes
     pusherClient.bind('messages:new', messageHandler)
     pusherClient.bind('message:update', updateMessageHandler);
@@ -63,18 +63,19 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
     }
   }, [conversationId]);
 
-  return ( 
+  return (
     <div className="flex-1 overflow-y-auto bg-pink-100">
       {messages.map((message, i) => (
-        <MessageBox 
-          isLast={i === messages.length - 1} 
-          key={message.id} 
+        <MessageBox
+          isLast={i === messages.length - 1}
+          key={message.id}
           data={message}
+          prevMsgIsOwn={messages[i - 1]?.sender?.phoneNumber === message.sender?.phoneNumber}
         />
       ))}
       <div className="pt-24" ref={bottomRef} />
     </div>
   );
 }
- 
+
 export default Body;

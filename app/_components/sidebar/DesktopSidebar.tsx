@@ -24,6 +24,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import ConversationList from "@/app/conversations/_components/ConversationList";
+import { Input } from "@/components/ui/input";
+import SearchBar from "./SearchBar";
 
 
 interface DesktopSidebarProps {
