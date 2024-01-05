@@ -25,14 +25,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import ConversationList from "@/app/conversations/_components/ConversationList";
 import { Input } from "@/components/ui/input";
-import SearchBar from "./SearchBar";
 
 
-interface DesktopSidebarProps {
+interface DesktopSidebarHeaderProps {
   currentUser: User
 }
 
-const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
+const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
   currentUser
 }) => {
   const routes = useRoutes();
@@ -42,7 +41,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
     <>
       {/* <SettingsModal currentUser={currentUser} isOpen={isOpen} onClose={() => setIsOpen(false)} /> */}
       <div className="
-      bg-[#f5f0f0]
+      bg-[#f7f7f7]
         left-0 
         overflow-y-auto 
         border-r-[2px]
@@ -58,7 +57,7 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
             <ProfileSheet currentUser={currentUser} />
           </div>
         </nav>
-        <nav className="flex justify-between ml-20 space-x-5 items-center">
+        <nav className="flex justify-between space-x-5 mr-4 items-center">
           <CommunitiesSheet />
           <StatusSheet />
           <ChannelsSheet />
@@ -86,4 +85,4 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({
   );
 }
 
-export default DesktopSidebar;
+export default DesktopSidebarHeader;

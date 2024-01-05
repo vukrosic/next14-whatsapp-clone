@@ -32,7 +32,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
   const [isFilterActivated, setIsFilterActivated] = useState(false);
   const [searchText, setSearchText] = useState("");
 
-  const filterImageSrc = isFilterActivated ? 'images/FilterWhite.svg' : 'images/Filter.svg';
+  const filterImageSrc = isFilterActivated ? '/images/FilterWhite.svg' : '/images/Filter.svg';
 
   const handleFilterClick = () => {
     setIsFilterActivated(!isFilterActivated);
@@ -119,7 +119,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
         <div>
           <div className="space-y-2 flex">
             <div className="flex bg-gray-200 w-11/12 m-auto rounded-xl mt-2 ml-3">
-              <img src="images/Search.svg" className="ml-3" />
+              <img src="/images/Search.svg" className="ml-3" />
               <Input
                 placeholder="Search or start a new chat"
                 className="bg-transparent border-0"

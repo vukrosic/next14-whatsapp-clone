@@ -37,20 +37,20 @@ const ChannelsSheet = () => {
         <Sheet>
             <SheetTrigger asChild>
                 <button>
-                    <Image className='hover:cursor-pointer' src='images/Channels.svg' alt="Channels" width={24} height={24} />
+                    <Image className='hover:cursor-pointer' src='/images/Channels.svg' alt="Channels" width={24} height={24} />
                 </button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[330px] sm:w-[540px] p-0">
                 <SheetHeader className="bg-[#008069]">
                     <div className="flex mt-14 mb-3">
                         <SheetClose asChild>
-                            <img src="images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
+                            <img src="/images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
                         </SheetClose>
                         <SheetTitle className="text-white flex items-center justify-center ">Channels</SheetTitle>
                         <div className="flex ml-auto">
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
-                                    <img src="images/Plus.svg" className="p-2 cursor-pointer mr-4" />
+                                    <img src="/images/Plus.svg" className="p-2 cursor-pointer mr-4" />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
                                     <DropdownMenuItem className="p-4 cursor-pointer">
@@ -77,7 +77,7 @@ const ChannelsSheet = () => {
                                     <AvatarImage src="https://github.com/shadcn.png" />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
-                                <img src="images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
+                                <img src="/images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
 
                                 <h4 className="text-[0.8125rem]">The Atlantic</h4>
                                 <p className="text-muted-foreground text-[0.875rem]">Follow</p>
@@ -89,7 +89,7 @@ const ChannelsSheet = () => {
                                     <AvatarImage src="https://github.com/shadcn.png" />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
-                                <img src="images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
+                                <img src="/images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
 
                                 <h4 className="text-[0.8125rem]">The Atlantic</h4>
                                 <p className="text-muted-foreground text-[0.875rem]">Follow</p>
@@ -103,7 +103,7 @@ const ChannelsSheet = () => {
                                     <AvatarImage src="https://github.com/shadcn.png" />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
-                                <img src="images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
+                                <img src="/images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
 
                                 <h4 className="text-[0.8125rem]">The Atlantic</h4>
                                 <p className="text-muted-foreground text-[0.875rem]">Follow</p>
@@ -115,7 +115,7 @@ const ChannelsSheet = () => {
                                     <AvatarImage src="https://github.com/shadcn.png" />
                                     <AvatarFallback>CN</AvatarFallback>
                                 </Avatar>
-                                <img src="images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
+                                <img src="/images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
 
                                 <h4 className="text-[0.8125rem]">The Atlantic</h4>
                                 <p className="text-muted-foreground text-[0.875rem]">Follow</p>

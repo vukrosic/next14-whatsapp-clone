@@ -1,6 +1,6 @@
 import { getCurrentUser } from '@/app/actions/getCurrentUser';
 
-import DesktopSidebarHeader from './DesktopSidebar';
+import DesktopSidebarHeader from './DesktopSidebarHeader';
 import MobileFooter from './MobileFooter';
 import ConversationList from '@/app/conversations/_components/ConversationList';
 import getConversations from '@/app/actions/getConversations';
@@ -19,7 +19,7 @@ async function MainPage({ children }: {
 
   return (
     <div className="h-full w-screen flex">
-      <aside className="h-full">
+      <aside className="h-full w-[600px] min-w-[300px] bg-red-600">
         <DesktopSidebarHeader currentUser={currentUserPrisma!} />
         <ConversationList
           users={users}

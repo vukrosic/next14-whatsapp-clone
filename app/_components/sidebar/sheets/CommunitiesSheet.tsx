@@ -27,19 +27,19 @@ const CommunitiesSheet = () => {
         <Sheet>
             <SheetTrigger asChild>
                 <button>
-                    <Image className='hover:cursor-pointer' src='images/Communities.svg' alt="Communities" width={24} height={24} />
+                    <Image className='hover:cursor-pointer' src='/images/Communities.svg' alt="Communities" width={24} height={24} />
                 </button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[330px] sm:w-[540px] p-0">
                 <SheetHeader className="bg-[#008069]">
                     <div className="flex mt-14 mb-3">
                         <SheetClose asChild>
-                            <img src="images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
+                            <img src="/images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
                         </SheetClose>
                         <SheetTitle className="text-white flex items-center justify-center ">Status</SheetTitle>
                         <div className="flex ml-auto w-[90px] h-[40px]">
-                            <img src="images/Plus.svg" className="p-2 cursor-pointer" />
-                            <img src="images/MenuWhite.svg" className="p-2 cursor-pointer" />
+                            <img src="/images/Plus.svg" className="p-2 cursor-pointer" />
+                            <img src="/images/MenuWhite.svg" className="p-2 cursor-pointer" />
                         </div>
                     </div>
                 </SheetHeader>
@@ -73,7 +73,7 @@ const CommunitiesSheet = () => {
                 </button>
                 <SheetFooter>
                     <div className="flex m-auto">
-                        <img src="images/Padlock.svg" className="m-auto" />
+                        <img src="/images/Padlock.svg" className="m-auto" />
                         <p className="text-[12px]">Your status updates are <span className="text-blue-500 text-[12px]">end-to-end encrypted</span></p>
                     </div>
                 </SheetFooter>
