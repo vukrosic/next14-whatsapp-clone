@@ -10,6 +10,16 @@ import { FullMessageType } from "@/app/types";
 import Avatar from "@/app/_components/Avatar";
 import ImageModal from "./ImageModal";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+
 interface MessageBoxProps {
   data: FullMessageType;
   isLast?: boolean;
@@ -40,7 +50,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({
   const message = clsx(
     'text-sm w-fit overflow-hidden ml-16',
     isOwn ? 'bg-[#d1f4cc] text-black' : 'bg-gray-100',
-    data.image ? 'rounded-[3px]' : 'rounded-[4px] py-2 px-1 shadow-lg shadow-gray-300 shadow-bottom'
+    data.image ? 'rounded-[3px]' : 'rounded-[7px] py-2 px-1 shadow-lg shadow-gray-300 shadow-bottom'
   );
 
   return (
@@ -69,20 +79,46 @@ const MessageBox: React.FC<MessageBoxProps> = ({
             // />
             <div>image placeholder</div>
           ) : (
-            <div className="flex flex-col">
-              <p className="">
+            <div className="flex flex-col relative max-w-[600px]">
+              <p className="mb-2 break-words mr-20">
                 {data.body}
               </p>
-              <div className="flex items-end">
-                <div className="text-[11px] h-[15px] text-gray-500 ml-auto">
+              <div className="group absolute top-0 right-0">
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <img
+                      src="/images/DropdownIcon.svg"
+                      alt="Dropdown Icon"
+                      className="w-[16px] h-[16px] invisible group-hover:visible cursor-pointer"
+                    />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem className="p-3">Message Info</DropdownMenuItem>
+                    <DropdownMenuItem className="p-3">Reply</DropdownMenuItem>
+                    <DropdownMenuItem className="p-3">React</DropdownMenuItem>
+                    <DropdownMenuItem className="p-3">Forward</DropdownMenuItem>
+                    <DropdownMenuItem className="p-3">Pin</DropdownMenuItem>
+                    <DropdownMenuItem className="p-3">Keep</DropdownMenuItem>
+                    <DropdownMenuItem className="p-3">Delete</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+              </div>
+
+
+
+              <div className="absolute bottom-0 right-0 flex items-end">
+                <div className="text-[11px] h-[15px] text-gray-500">
                   {format(new Date(data.createdAt), 'p')}
                 </div>
                 <img src={SeenInfo} className="mr-[2px] ml-[2px] w-[16px] h-[11px]" />
               </div>
+
             </div>
+
           )}
         </div>
-        {/* {isLast && isOwn && seenList.length > 0 && (
+        {isLast && isOwn && seenList.length > 0 && (
           <div
             className="
             text-xs 
@@ -92,7 +128,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({
           >
             {`Seen by ${seenList}`}
           </div>
-        )} */}
+        )}
       </div>
       <img src="/images/MessageBubbleTriangle.svg" className="mr-16" />
     </div>

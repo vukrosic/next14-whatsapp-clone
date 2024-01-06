@@ -19,8 +19,11 @@ async function MainPage({ children }: {
 
   return (
     <div className="h-full w-screen flex">
-      <aside className="h-full w-[600px] min-w-[300px] bg-red-600">
-        <DesktopSidebarHeader currentUser={currentUserPrisma!} />
+      <aside className="h-full w-[600px] min-w-[300px]">
+        <DesktopSidebarHeader currentUser={currentUserPrisma!}
+          conversations={conversations}
+          users={users}
+        />
         <ConversationList
           users={users}
           title="Messages"

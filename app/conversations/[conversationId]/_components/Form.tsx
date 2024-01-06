@@ -1,14 +1,14 @@
 'use client';
 
-import { 
-  HiPaperAirplane, 
+import {
+  HiPaperAirplane,
   HiPhoto
 } from "react-icons/hi2";
 import MessageInput from "./MessageInput";
-import { 
-  FieldValues, 
-  SubmitHandler, 
-  useForm 
+import {
+  FieldValues,
+  SubmitHandler,
+  useForm
 } from "react-hook-form";
 import axios from "axios";
 import useConversation from "@/app/hooks/useConversation";
@@ -44,8 +44,8 @@ const Form = () => {
     })
   }
 
-  return ( 
-    <div 
+  return (
+    <div
       className="
         py-4 
         px-4 
@@ -65,19 +65,26 @@ const Form = () => {
       >
         <HiPhoto size={30} className="text-sky-500" />
       </CldUploadButton> */}
-      <form 
-        onSubmit={handleSubmit(onSubmit)} 
+      <form
+        onSubmit={handleSubmit(onSubmit)}
         className="flex items-center gap-2 lg:gap-4 w-full"
       >
-        <MessageInput 
-          id="message" 
-          register={register} 
-          errors={errors} 
-          required 
+        <button>
+          <img src="/images/Emoji.svg" alt="Emoji" width={24} height={24} />
+        </button>
+        <button id="rotateButton" className="transform animate-spin duration-300">
+          <img src="/images/PlusDark.svg" alt="Plus" className="rotate-0" />
+        </button>
+
+        <MessageInput
+          id="message"
+          register={register}
+          errors={errors}
+          required
           placeholder="Write a message"
         />
-        <button 
-          type="submit" 
+        {/* <button
+          type="submit"
           className="
             rounded-full 
             p-2 
@@ -91,10 +98,14 @@ const Form = () => {
             size={18}
             className="text-white"
           />
+        </button> */}
+
+        <button>
+          <img src="/images/Microphone.svg" alt="Emoji" />
         </button>
       </form>
     </div>
   );
 }
- 
+
 export default Form;

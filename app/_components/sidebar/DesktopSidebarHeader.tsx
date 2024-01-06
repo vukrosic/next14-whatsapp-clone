@@ -28,11 +28,15 @@ import { Input } from "@/components/ui/input";
 
 
 interface DesktopSidebarHeaderProps {
-  currentUser: User
+  currentUser: User,
+  conversations: any,
+  users: any
 }
 
 const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
-  currentUser
+  currentUser,
+  conversations,
+  users
 }) => {
   const routes = useRoutes();
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +65,7 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
           <CommunitiesSheet />
           <StatusSheet />
           <ChannelsSheet />
-          <NewChatSheet />
+          <NewChatSheet conversations={conversations} users={users} />
 
           <DropdownMenu>
             <DropdownMenuTrigger>

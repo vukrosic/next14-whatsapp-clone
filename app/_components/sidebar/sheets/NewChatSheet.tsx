@@ -1,7 +1,11 @@
+"use client"
+
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useState, useMemo } from "react"
+import getUsers from "@/app/actions/getUsers"
 import {
     Sheet,
     SheetClose,
@@ -16,12 +20,24 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import useActiveList from "@/app/hooks/useActiveList"
 import { getCurrentUser } from "@/app/actions/getCurrentUser"
 import Image from "next/image"
+import { User } from "@prisma/client"
+import NewContactSheet from "./NewContactSheet"
 
-const NewChatSheet = () => {
+interface DesktopSidebarHeaderProps {
+    conversations: any,
+    users: any
+}
+
+const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
+    conversations,
+    users
+}) => {
     // const { members } = useActiveList();
     // const { currentUserPrisma } = getCurrentUser();
     // const isActive = members.indexOf(currentUserPrisma?.phoneNumber!) !== -1;
+    const [searchText, setSearchText] = useState("")
     const isActive = true
+    console.log(conversations)
 
     return (
         <Sheet>
@@ -36,41 +52,68 @@ const NewChatSheet = () => {
                         <SheetClose asChild>
                             <img src="/images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
                         </SheetClose>
-                        <SheetTitle className="text-white flex items-center justify-center ">Status</SheetTitle>
-                        <div className="flex ml-auto w-[90px] h-[40px]">
-                            <img src="/images/Plus.svg" className="p-2 cursor-pointer" />
-                            <img src="/images/MenuWhite.svg" className="p-2 cursor-pointer" />
-                        </div>
+                        <SheetTitle className="text-white flex items-center justify-center ">New Chat</SheetTitle>
                     </div>
                 </SheetHeader>
-                <button className="flex m-6 relative">
-                    <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" />
+                <div className="space-y-2 flex">
+                    <div className="flex bg-gray-100 w-11/12 m-auto rounded-xl mt-2 ml-3">
+                        <button onClick={() => setSearchText("")}>
+                            <img src="/images/ArrowLeftGreen.svg" className="mr-7 ml-5 cursor-pointer" />
+                        </button>
+                        <Input
+                            placeholder="Search name or number"
+                            className="bg-transparent border-0"
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
+                    </div>
+
+                </div>
+
+                <button className="flex m-6 relative items-center">
+                    <Avatar className="w-12 h-12">
+                        <AvatarImage src="/images/group.svg" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
-                    {isActive ? (
-                        <span
-                            className="
-                            absolute
-                            block
-                            rounded-full 
-                            bg-green-500 
-                            top-6
-                            left-8
-                            ring-2 
-                            ring-white 
-                            h-2 
-                            w-2 
-                            md:h-3 
-                            md:w-3
-                        "
-                        />
-                    ) : null}
                     <div className="ml-4 text-left">
-                        <h4 className="text-[1rem]">My Status</h4>
-                        <p className="text-muted-foreground text-[0.8125rem]">Add to my status</p>
+                        <NewContactSheet />
                     </div>
                 </button>
+
+                <button className="flex m-6 relative items-center">
+                    <Avatar className="w-12 h-12">
+                        <AvatarImage src="/images/group.svg" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <div className="ml-4 text-left">
+                        <h4 className="text-[1rem]">New group</h4>
+                    </div>
+                </button>
+
+                <button className="flex m-6 relative items-center">
+                    <Avatar className="w-12 h-12">
+                        <AvatarImage src="/images/community.svg" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <div className="ml-4 text-left">
+                        <h4 className="text-[1rem]">New community</h4>
+                    </div>
+                </button>
+
+                <div>CONTACTS</div>
+
+                {conversations.map((user: any) => (
+                    <button className="flex m-6 relative items-center">
+                        <Avatar className="w-12 h-12">
+                            <AvatarImage src={user.imageUrl || undefined} />
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <div className="ml-4 text-left">
+                            <h4 className="text-[1rem]">{user.username}</h4>
+                        </div>
+                    </button>
+                ))}
+
                 <SheetFooter>
                     <div className="flex m-auto">
                         <img src="/images/Padlock.svg" className="m-auto" />
