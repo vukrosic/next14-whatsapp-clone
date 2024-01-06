@@ -1,11 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { useState, useMemo } from "react"
-import getUsers from "@/app/actions/getUsers"
 import {
     Sheet,
     SheetClose,
@@ -17,10 +14,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import useActiveList from "@/app/hooks/useActiveList"
-import { getCurrentUser } from "@/app/actions/getCurrentUser"
 import Image from "next/image"
-import { User } from "@prisma/client"
 import NewContactSheet from "./NewContactSheet"
 
 interface DesktopSidebarHeaderProps {
@@ -38,6 +32,8 @@ const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
     const [searchText, setSearchText] = useState("")
     const isActive = true
     console.log(conversations)
+
+
 
     return (
         <Sheet>

@@ -15,7 +15,7 @@ export async function DELETE(
 ) {
   try {
     const { conversationId } = params;
-    const {currentUserPrisma } = await getCurrentUser();
+    const { currentUserPrisma } = await getCurrentUser();
 
     if (!currentUserPrisma?.id) {
       return NextResponse.json(null);

@@ -135,7 +135,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
               />
             </div>
           </div>
-          {filteredItems.map((item) => (
+          {items.map((item) => (
             <ConversationBox
               key={item.id}
               data={item}

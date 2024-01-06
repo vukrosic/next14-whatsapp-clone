@@ -21,18 +21,35 @@ import useActiveList from "@/app/hooks/useActiveList"
 import { getCurrentUser } from "@/app/actions/getCurrentUser"
 import Image from "next/image"
 import { User } from "@prisma/client"
+import axios from "axios"
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
 
 
 const NewContactSheet = () => {
-    // const { members } = useActiveList();
-    // const { currentUserPrisma } = getCurrentUser();
-    // const isActive = members.indexOf(currentUserPrisma?.phoneNumber!) !== -1;
-    const [searchText, setSearchText] = useState("")
-    const [username, setUsername] = useState("")
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
     const [number, setNumber] = useState("")
+
+    // const { conversationId } = useConversation();
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: {
+            errors,
+        }
+    } = useForm<FieldValues>({
+        defaultValues: {
+            phoneNumber: ''
+        }
+    });
+
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        setValue('phoneNumber', number, { shouldValidate: true });
+        axios.post('/api/contacts', {
+            ...data
+        })
+    }
 
     return (
         <Sheet>
@@ -48,25 +65,10 @@ const NewContactSheet = () => {
                         <SheetTitle className="text-white flex items-center justify-center ">New Contact</SheetTitle>
                     </div>
                 </SheetHeader>
-                <div className="space-y-6">
-                    <div className="mt-4">
-                        <Label className="text-[#008069] ml-12">First Name</Label>
-                        <Input
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                            placeholder="First Name"
-                            className="w-10/12 m-auto border-0 border-b-2 border-gray-400 focus:border-primary"
-                        />
-                    </div>
-                    <div>
-                        <Label className="text-[#008069] ml-12">Last Name</Label>
-                        <Input
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                            placeholder="Last Name"
-                            className="w-10/12 m-auto border-0 border-b-2 border-gray-400 focus:border-primary"
-                        />
-                    </div>
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="flex items-center gap-2 lg:gap-4 w-full"
+                >
                     <div>
                         <Label className="text-[#008069] ml-12">Phone Number</Label>
                         <Input
@@ -78,9 +80,9 @@ const NewContactSheet = () => {
                         />
                     </div>
                     <div className="flex justify-center">
-                        <Button className="m-8">New Chat</Button>
+                        <Button type="submit" className="m-8">New Chat</Button>
                     </div>
-                </div>
+                </form>
 
             </SheetContent>
         </Sheet>
