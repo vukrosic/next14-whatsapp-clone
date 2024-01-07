@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import NewChatSheet from "./sidebar/sheets/NewChatSheet";
 
 const EmptyState = () => {
   return (
@@ -19,7 +20,8 @@ const EmptyState = () => {
         <h3 className="text-foreground-muted text-xl font-semibold text-gray-900">
           Select a chat or start a new conversation
         </h3>
-        <Button className="m-8">New Chat</Button>
+        <NewChatSheet />
+        {/* <Button className="m-8">New Chat</Button> */}
       </div>
     </div>
   );
