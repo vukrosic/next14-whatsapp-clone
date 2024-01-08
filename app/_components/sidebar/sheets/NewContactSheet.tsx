@@ -27,7 +27,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
 
 const NewContactSheet = () => {
-    const [number, setNumber] = useState("")
+    const [number, setNumber] = useState<string>("")
 
     // const { conversationId } = useConversation();
 
@@ -45,6 +45,7 @@ const NewContactSheet = () => {
     });
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        console.log("submitting phone number: " + number)
         setValue('phoneNumber', number, { shouldValidate: true });
         axios.post('/api/contacts', {
             ...data
@@ -70,17 +71,19 @@ const NewContactSheet = () => {
                     className="flex items-center gap-2 lg:gap-4 w-full"
                 >
                     <div>
-                        <Label className="text-[#008069] ml-12">Phone Number</Label>
+                        <div className="flex flex-col">
+                            <Label className="text-[#008069] text-sm ml-5">Full phone number:</Label>
+                        </div>
                         <Input
                             value={number}
                             onChange={(e) => setNumber(e.target.value)}
                             type="tel"
-                            placeholder="Phone Number"
+                            placeholder="+1 123 456 7890"
                             className="w-10/12 m-auto border-0 border-b-2 border-gray-400 focus:border-primary"
                         />
                     </div>
                     <div className="flex justify-center">
-                        <Button type="submit" className="m-8">New Chat</Button>
+                        <Button type="submit" className="m-2 my-6">New Contact</Button>
                     </div>
                 </form>
 

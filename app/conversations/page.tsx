@@ -1,16 +1,14 @@
-'use client';
-
-import clsx from "clsx";
-
-import useConversation from "../hooks/useConversation";
 import EmptyState from "../_components/EmptyState";
+import getContacts from "../actions/getContacts";
+import getUsers from "../actions/getUsers";
 
-const Home = () => {
-  const { isOpen } = useConversation();
+const Home = async () => {
+  const users = await getUsers()
+  const contacts = await getContacts()
 
   return (
     <div className="h-full bg-gray-200">
-      <EmptyState />
+      <EmptyState users={users} contacts={contacts} />
     </div>
   )
 }

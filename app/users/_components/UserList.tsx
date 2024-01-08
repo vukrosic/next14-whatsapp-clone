@@ -6,11 +6,11 @@ import { User } from "@prisma/client";
 import UserBox from "./UserBox";
 
 interface UserListProps {
-  items: User[];
+  user: User;
 }
 
 const UserList: React.FC<UserListProps> = ({
-  items,
+  user,
 }) => {
   return (
     <aside
@@ -30,7 +30,9 @@ const UserList: React.FC<UserListProps> = ({
       <div className="px-5">
         <div className="flex-col">
         </div>
-        {items.map((item) => (
+
+        {/* no error here, just prisma doesn't recognize relation as a field */}
+        {user.following.map((item) => (
           <UserBox
             key={item.id}
             data={item}

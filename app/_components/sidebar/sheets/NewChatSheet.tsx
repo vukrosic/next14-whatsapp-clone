@@ -18,21 +18,20 @@ import Image from "next/image"
 import NewContactSheet from "./NewContactSheet"
 import UserList from "@/app/users/_components/UserList"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { User } from "@prisma/client"
 
 interface DesktopSidebarHeaderProps {
-    users: any
+    user: User
 }
 
 const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
-    users
+    user
 }) => {
     // const { members } = useActiveList();
     // const { currentUserPrisma } = getCurrentUser();
     // const isActive = members.indexOf(currentUserPrisma?.phoneNumber!) !== -1;
     const [searchText, setSearchText] = useState("")
     const isActive = true
-    console.log("users:")
-    console.log(users)
 
 
 
@@ -101,8 +100,8 @@ const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
                     <div className="ml-12 my-5 text-primary font-light">CONTACTS ON WHATSAPP</div>
 
 
-                    <UserList items={users} />
-
+                    <UserList user={user} />
+                    {/* {contacts[0].} */}
                 </ScrollArea>
                 <SheetFooter>
                     <div className="flex m-auto">

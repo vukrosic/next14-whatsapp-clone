@@ -53,9 +53,10 @@ const UserBox: React.FC<UserBoxProps> = ({
       >
         <button className="flex relative items-center">
           <Avatar className="w-12 h-12">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src="/images/ProfilePlaceholder.svg" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
+
           <div className="ml-4 text-left space-y-1 relative">
             <h4 className="text-[1rem] absolute bottom-0">{data.username}</h4>
             <h4 className="text-[0.75rem] absolute top-0">{data.about} </h4>

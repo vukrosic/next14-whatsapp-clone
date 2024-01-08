@@ -4,7 +4,7 @@ import DesktopItem from "./DesktopItem";
 import useRoutes from "@/app/hooks/useRoutes";
 // import SettingsModal from "./SettingsModal";
 import { useState } from "react";
-import { User } from "@prisma/client";
+import { Conversation, User } from "@prisma/client";
 import Avatar from "../Avatar";
 import CommunitiesDrawer from "./sheets/CommunitiesSheet";
 import StatusDrawer from "./sheets/StatusSheet";
@@ -29,8 +29,8 @@ import { Input } from "@/components/ui/input";
 
 interface DesktopSidebarHeaderProps {
   currentUser: User,
-  conversations: any,
-  users: any
+  conversations: Conversation[],
+  users: User[]
 }
 
 const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
@@ -65,7 +65,7 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
           <CommunitiesSheet />
           <StatusSheet />
           <ChannelsSheet />
-          <NewChatSheet conversations={conversations} users={users} />
+          <NewChatSheet user={currentUser} />
 
           <DropdownMenu>
             <DropdownMenuTrigger>

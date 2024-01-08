@@ -20,7 +20,8 @@ async function MainPage({ children }: {
   return (
     <div className="h-full w-screen flex">
       <aside className="h-full w-[600px] min-w-[300px]">
-        <DesktopSidebarHeader currentUser={currentUserPrisma!}
+        <DesktopSidebarHeader
+          currentUser={currentUserPrisma!}
           conversations={conversations}
           users={users}
         />
