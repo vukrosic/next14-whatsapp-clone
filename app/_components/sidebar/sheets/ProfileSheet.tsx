@@ -74,15 +74,15 @@ const ProfileSheet = (
                 <SheetHeader className="bg-primary">
                     <div className="flex mt-16 mb-5">
                         <SheetClose asChild>
-                            <img src="images/ArrowLeft.svg" className="mr-7 ml-4 cursor-pointer" />
+                            <img src="/images/ArrowLeft.svg" className="mr-7 ml-4 cursor-pointer" />
                         </SheetClose>
                         <SheetTitle className="text-white flex items-center justify-center ">Profile</SheetTitle>
                     </div>
                 </SheetHeader>
                 <div className="bg-gray-200">
                     <div className="m-8 relative">
-                        <img src="images/ProfilePlaceholder.svg" className="m-auto text-[#d1d7db] cursor-pointer" />
-                        <img src="images/Camera.svg" className="absolute top-1/2 left-1/2 transform -translate-x-3 -translate-y-8" />
+                        <img src="/images/ProfilePlaceholder.svg" className="m-auto text-[#d1d7db] cursor-pointer" />
+                        <img src="/images/Camera.svg" className="absolute top-1/2 left-1/2 transform -translate-x-3 -translate-y-8" />
                         <p className="absolute top-1/2 left-1/2 transform -translate-x-14 text-[#ffffff] text-center text-xs">ADD PROFILE PHOTO</p>
                     </div>
 
@@ -100,7 +100,7 @@ const ProfileSheet = (
                                         className="w-10/12 m-auto border-0 border-b-2 border-gray-400 focus:border-primary"
                                     />
                                     <img
-                                        src="images/Checkmark.svg"
+                                        src="/images/Checkmark.svg"
                                         alt="Check"
                                         className="cursor-pointer ml-2"
                                         onClick={handleUsernameCheckClick}
@@ -110,7 +110,7 @@ const ProfileSheet = (
                                 <>
                                     <p className="ml-8">{currentUser.username}</p>
                                     <img
-                                        src="images/Edit.svg"
+                                        src="/images/Edit.svg"
                                         alt="Edit"
                                         className="cursor-pointer ml-auto"
                                         onClick={handleUsernameEditClick}
@@ -135,7 +135,7 @@ const ProfileSheet = (
                                         className="w-10/12 m-auto border-0 border-b-2 border-gray-400 focus:border-primary"
                                     />
                                     <img
-                                        src="images/Checkmark.svg"
+                                        src="/images/Checkmark.svg"
                                         alt="Check"
                                         className="cursor-pointer ml-2"
                                         onClick={handleAboutCheckClick}
@@ -145,7 +145,7 @@ const ProfileSheet = (
                                 <>
                                     <p className="ml-8">{currentUser.about}</p>
                                     <img
-                                        src="images/Edit.svg"
+                                        src="/images/Edit.svg"
                                         alt="Edit"
                                         className="cursor-pointer ml-auto"
                                         onClick={handleAboutEditClick}
