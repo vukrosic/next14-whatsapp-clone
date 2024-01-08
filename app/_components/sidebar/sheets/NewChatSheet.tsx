@@ -36,7 +36,10 @@ const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
     useEffect(() => {
         // this is NOT an error, following exists in user, 
         // but it's not defined in the User type
-        if (user.hasOwnProperty('following') && user.following !== undefined) {
+        // if (user.hasOwnProperty('following') && user.following !== undefined) {
+        //     setContacts(user.following);
+        // }
+        if (user?.following !== undefined) {
             setContacts(user.following);
         }
     }, [user]);

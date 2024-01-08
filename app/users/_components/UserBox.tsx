@@ -23,7 +23,7 @@ const UserBox: React.FC<UserBoxProps> = ({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleClick = useCallback(() => {
+  const handleContactClick = useCallback(() => {
     setIsLoading(true);
 
     axios.post('/api/conversations', { userId: data.id })
@@ -33,7 +33,8 @@ const UserBox: React.FC<UserBoxProps> = ({
       .finally(() => setIsLoading(false));
   }, [data, router]);
 
-  const handleRemoveClick = () => {
+  const handleRemoveClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setIsLoading(true);
     console.log("removing contact: ")
     axios.post('/api/contacts', { phoneNumber: data.phoneNumber, action: 'remove' })
@@ -47,14 +48,16 @@ const UserBox: React.FC<UserBoxProps> = ({
       .finally(() => setIsLoading(false))
   };
 
+
+
   return (
     <>
       {isLoading && (
         <LoadingModal />
       )}
       <Separator className="mb-2" />
-      <div
-        onClick={handleClick}
+      <button
+        onClick={handleContactClick}
         className="
           w-full 
           relative 
@@ -69,7 +72,7 @@ const UserBox: React.FC<UserBoxProps> = ({
           cursor-pointer
         "
       >
-        <button className="flex w-full items-center">
+        <div className="flex w-full items-center">
           <Avatar className="w-12 h-12">
             <AvatarImage src="/images/ProfilePlaceholder.svg" />
             <AvatarFallback>CN</AvatarFallback>
@@ -80,12 +83,14 @@ const UserBox: React.FC<UserBoxProps> = ({
             <h4 className="text-[0.75rem] absolute top-0">{data.about} </h4>
           </div>
 
-          <Button onClick={handleRemoveClick} className=" w-full justify-end bg-inherit hover:bg-inherit">
-            <div className="group">
-              <Trash2 className="invisible group-hover:visible text-red-700 w-5 h-5 m-2 mx-4" />
-            </div>
-          </Button>
-        </button>
+
+          <div className="group w-full flex justify-end">
+            <Button onClick={handleRemoveClick} className="bg-inherit hover:bg-inherit p-0">
+              <Trash2 className="invisible group-hover:visible text-red-700 w-5 h-5" />
+            </Button>
+          </div>
+
+        </div>
         {/* <AvatarCustom user={data} />
         <div className="min-w-0 flex-1">
           <div className="focus:outline-none">
@@ -97,7 +102,7 @@ const UserBox: React.FC<UserBoxProps> = ({
             </div>
           </div>
         </div> */}
-      </div>
+      </button>
     </>
   );
 }

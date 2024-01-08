@@ -26,8 +26,6 @@ export const getCurrentUser = async (): Promise<CurrentUser> => {
         }
     });
 
-    console.log('currentUserPrisma: \n \n', currentUserPrisma)
-
     if (currentUserPrisma === null) {
         throw new Error('User not found');
     }

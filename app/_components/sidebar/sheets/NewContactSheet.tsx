@@ -23,6 +23,7 @@ import Image from "next/image"
 import { User } from "@prisma/client"
 import axios from "axios"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
+import toast, { Toaster } from 'react-hot-toast';
 
 interface NewContactSheetProps {
     handleAddContact: (contacts: User[]) => void;
@@ -49,16 +50,18 @@ const NewContactSheet: React.FC<NewContactSheetProps> = ({
         }
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log("submitting phone number from NewContactSheet: " + number)
-        setValue('phoneNumber', number, { shouldValidate: true });
-        setValue('action', 'add', { shouldValidate: true });
-        axios.post('/api/contacts', {
-            ...data
-        })
+    const onSubmit: SubmitHandler<FieldValues> = () => {
+        const postData = {
+            phoneNumber: number,
+            action: 'add',
+        };
+        // Make the axios post request with the updated data
+        axios.post('/api/contacts', postData)
             .then((response) => {
                 const contacts = response.data; // Assuming your new contacts are in the response data
                 handleAddContact(contacts);
+                toast.success("Contact added successfully!");
+                setNumber("");
             })
             .catch((error) => {
                 console.error("Error adding contact:", error);
@@ -97,6 +100,7 @@ const NewContactSheet: React.FC<NewContactSheetProps> = ({
                     </div>
                     <div className="flex justify-center">
                         <Button type="submit" className="m-2 my-6">New Contact</Button>
+                        <Toaster />
                     </div>
                 </form>
 
