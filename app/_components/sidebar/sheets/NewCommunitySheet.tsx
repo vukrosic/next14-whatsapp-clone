@@ -16,10 +16,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import useActiveList from "@/app/hooks/useActiveList"
 import { getCurrentUser } from "@/app/actions/getCurrentUser"
 import Image from "next/image"
-import NewCommunitySheet from "./NewCommunitySheet"
-import { Separator } from "@/components/ui/separator"
 
-const CommunitiesSheet = () => {
+const NewCommunitySheet = () => {
     // const { members } = useActiveList();
     // const { currentUserPrisma } = getCurrentUser();
     // const isActive = members.indexOf(currentUserPrisma?.phoneNumber!) !== -1;
@@ -28,8 +26,11 @@ const CommunitiesSheet = () => {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <button>
-                    <Image className='hover:cursor-pointer' src='/images/Communities.svg' alt="Communities" width={24} height={24} />
+                <button className="flex m-2 items-center">
+                    <div className="flex bg-[#00a884] rounded-xl w-12 h-12 items-center justify-center">
+                        <Image className='hover:cursor-pointer' src='/images/CommunityWhite.svg' alt="New" width={30} height={30} />
+                    </div>
+                    <p className="ml-4">New community</p>
                 </button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[330px] sm:w-[540px] p-0">
@@ -38,14 +39,22 @@ const CommunitiesSheet = () => {
                         <SheetClose asChild>
                             <img src="/images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
                         </SheetClose>
-                        <SheetTitle className="text-white flex items-center justify-center ">Communities</SheetTitle>
+                        <SheetTitle className="text-white flex items-center justify-center ">New Community</SheetTitle>
                     </div>
                 </SheetHeader>
-                <NewCommunitySheet />
-                <div className="h-3 bg-gray-200 shadow-inner inset-y-4 inset-x-0"></div>
+                <div className="flex flex-col items-center text-center">
+                    <img src="/images/NewCommunityPoster.svg" className="my-8" />
+                    <h1 className="font-bold text-2xl">Create new community</h1>
+                    <p className="text-muted-foreground text-sm w-5/6 mt-3">Bring together a neighborhood, school or more. Create topic-based groups for members, and easily send them admin announcements.</p>
+                    <div className="flex items-center">
+                        <a href="https://faq.whatsapp.com/231869526393268?lang=en" className="text-green-700 text-sm mt-3 font-light">See example communities</a>
+                        <img src="/images/MoreThan.svg" className="ml-2 mt-3 " />
+                    </div>
+
+                </div>
             </SheetContent>
         </Sheet>
     )
 }
 
-export default CommunitiesSheet;
+export default NewCommunitySheet;
