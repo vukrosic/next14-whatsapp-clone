@@ -24,9 +24,13 @@ import { User } from "@prisma/client"
 import axios from "axios"
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 
+interface NewContactSheetProps {
+    handleAddContact: (contacts: User[]) => void;
+}
 
-
-const NewContactSheet = () => {
+const NewContactSheet: React.FC<NewContactSheetProps> = ({
+    handleAddContact
+}) => {
     const [number, setNumber] = useState<string>("")
 
     // const { conversationId } = useConversation();
@@ -40,16 +44,25 @@ const NewContactSheet = () => {
         }
     } = useForm<FieldValues>({
         defaultValues: {
-            phoneNumber: ''
+            phoneNumber: '',
+            action: 'add',
         }
     });
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log("submitting phone number: " + number)
+        console.log("submitting phone number from NewContactSheet: " + number)
         setValue('phoneNumber', number, { shouldValidate: true });
+        setValue('action', 'add', { shouldValidate: true });
         axios.post('/api/contacts', {
             ...data
         })
+            .then((response) => {
+                const contacts = response.data; // Assuming your new contacts are in the response data
+                handleAddContact(contacts);
+            })
+            .catch((error) => {
+                console.error("Error adding contact:", error);
+            })
     }
 
     return (

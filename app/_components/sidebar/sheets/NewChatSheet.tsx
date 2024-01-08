@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Input } from "@/components/ui/input"
-import { useState, useMemo } from "react"
+import { useState, useEffect } from "react"
 import {
     Sheet,
     SheetClose,
@@ -32,7 +32,22 @@ const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
     // const isActive = members.indexOf(currentUserPrisma?.phoneNumber!) !== -1;
     const [searchText, setSearchText] = useState("")
     const isActive = true
+    const [contacts, setContacts] = useState<User[]>([])
+    useEffect(() => {
+        // this is NOT an error, following exists in user, 
+        // but it's not defined in the User type
+        if (user.hasOwnProperty('following') && user.following !== undefined) {
+            setContacts(user.following);
+        }
+    }, [user]);
 
+    const handleAddContact = (contacts: User[]) => {
+        setContacts(contacts);
+    }
+
+    const handleRemoveContact = (newContacts: User[]) => {
+        setContacts(newContacts);
+    }
 
 
     return (
@@ -73,7 +88,7 @@ const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                         <div className="ml-4 text-left">
-                            <NewContactSheet />
+                            <NewContactSheet handleAddContact={handleAddContact} />
                         </div>
                     </button>
 
@@ -100,7 +115,7 @@ const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
                     <div className="ml-12 my-5 text-primary font-light">CONTACTS ON WHATSAPP</div>
 
 
-                    <UserList user={user} />
+                    <UserList contacts={contacts} handleRemoveContact={handleRemoveContact} />
                     {/* {contacts[0].} */}
                 </ScrollArea>
                 <SheetFooter>

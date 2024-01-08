@@ -4,14 +4,24 @@
 import { User } from "@prisma/client";
 
 import UserBox from "./UserBox";
+import { useState, useEffect } from "react";
 
 interface UserListProps {
-  user: User;
+  contacts: User[];
+  handleRemoveContact: (newContacts: User[]) => void;
 }
 
 const UserList: React.FC<UserListProps> = ({
-  user,
+  contacts,
+  handleRemoveContact
 }) => {
+
+
+
+
+  // const handleUserListAfterRemovingUser = (newContacts: User[]) => {
+  //   setContacts(newContacts);
+  // };
   return (
     <aside
       className="
@@ -32,12 +42,18 @@ const UserList: React.FC<UserListProps> = ({
         </div>
 
         {/* no error here, just prisma doesn't recognize relation as a field */}
-        {user.following.map((item) => (
-          <UserBox
-            key={item.id}
-            data={item}
-          />
-        ))}
+        {contacts.length > 0 ? (
+          contacts.map((item) => (
+            <UserBox
+              key={item.id}
+              data={item}
+              handleRemoveContact={handleRemoveContact}
+            />
+          ))
+        ) : (
+          <p>No contacts available.</p>
+          // Alternatively, you can render a different component here
+        )}
       </div>
     </aside>
   );

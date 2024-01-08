@@ -37,12 +37,6 @@ model User {
   followedByIDs String[] @db.ObjectId
   following     User[]   @relation("UserFollows", fields: [followingIDs], references: [id])
   followingIDs  String[] @db.ObjectId
-  // contactIds String[] @db.ObjectId
-
-  // Contact Contact? @relation("user")
-
-  // Contact1   Contact? @relation(fields: [contactId], references: [id])
-  // contactId String?  @db.ObjectId
 }
 
 // model Contact {

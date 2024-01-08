@@ -9,7 +9,7 @@ export async function POST(
   request: Request,
 ) {
   try {
-  const { currentUserPrisma, currentUserClerk } = await getCurrentUser();
+    const { currentUserPrisma, currentUserClerk } = await getCurrentUser();
     const body = await request.json();
     const {
       message,
@@ -66,8 +66,8 @@ export async function POST(
     });
 
     // this adds the message to the UI
-     await pusherServer.trigger(conversationId, 'messages:new', newMessage);
-     console.log("newMessage", newMessage)
+    await pusherServer.trigger(conversationId, 'messages:new', newMessage);
+    console.log("newMessage", newMessage)
 
     const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
 

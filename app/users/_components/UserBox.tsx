@@ -8,13 +8,17 @@ import LoadingModal from "@/app/_components/modals/LoadingModal";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AvatarFallback, Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface UserBoxProps {
-  data: User
+  data: User,
+  handleRemoveContact: (newContacts: User[]) => void;
 }
 
 const UserBox: React.FC<UserBoxProps> = ({
-  data
+  data,
+  handleRemoveContact
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +32,20 @@ const UserBox: React.FC<UserBoxProps> = ({
       })
       .finally(() => setIsLoading(false));
   }, [data, router]);
+
+  const handleRemoveClick = () => {
+    setIsLoading(true);
+    console.log("removing contact: ")
+    axios.post('/api/contacts', { phoneNumber: data.phoneNumber, action: 'remove' })
+      .then((response) => {
+        const newContacts = response.data; // Assuming your new contacts are in the response data
+        handleRemoveContact(newContacts);
+      })
+      .catch((error) => {
+        console.error("Error removing contact:", error);
+      })
+      .finally(() => setIsLoading(false))
+  };
 
   return (
     <>
@@ -51,7 +69,7 @@ const UserBox: React.FC<UserBoxProps> = ({
           cursor-pointer
         "
       >
-        <button className="flex relative items-center">
+        <button className="flex w-full items-center">
           <Avatar className="w-12 h-12">
             <AvatarImage src="/images/ProfilePlaceholder.svg" />
             <AvatarFallback>CN</AvatarFallback>
@@ -61,6 +79,12 @@ const UserBox: React.FC<UserBoxProps> = ({
             <h4 className="text-[1rem] absolute bottom-0">{data.username}</h4>
             <h4 className="text-[0.75rem] absolute top-0">{data.about} </h4>
           </div>
+
+          <Button onClick={handleRemoveClick} className=" w-full justify-end bg-inherit hover:bg-inherit">
+            <div className="group">
+              <Trash2 className="invisible group-hover:visible text-red-700 w-5 h-5 m-2 mx-4" />
+            </div>
+          </Button>
         </button>
         {/* <AvatarCustom user={data} />
         <div className="min-w-0 flex-1">
