@@ -7,6 +7,7 @@ import getConversations from '@/app/actions/getConversations';
 import getUsers from '@/app/actions/getUsers';
 import { Input } from '@/components/ui/input';
 
+
 async function MainPage({ children }: {
   children: React.ReactNode,
 }) {

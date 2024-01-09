@@ -20,6 +20,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import FileUpload from "../../FileUpload"
+import { UploadButton } from "@/lib/uploadthing"
 
 
 interface StatusSheetProps {
@@ -74,45 +75,74 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                         </div>
                     </div>
                 </SheetHeader>
+                <UploadButton
+                    className="h-16 pt-5 pl-4"
+                    content={{
+                        button({ ready }) {
+                            if (ready) return (
+                                <div className="flex relative w-full">
+                                    <Avatar>
+                                        <AvatarImage src={imageUrl} />
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                    <span
+                                        className="
+                                    absolute
+                                    flex
+                                    rounded-full 
+                                    bg-[#00a884]
+                                    top-6
+                                    left-8
+                                    ring-2 
+                                    ring-white 
+                                    h-[14px]
+                                    w-[14px]
+                                    items-center
+                                    justify-center
+                                    "
+                                    >
+                                        <img src="/images/Plus.svg" />
+                                    </span>
+                                    <div className="text-left w-full">
+                                        <h4 className="text-[1rem] text-black ml-5">My Status</h4>
+                                        <p className="text-muted-foreground text-[0.8125rem] ml-5">Add to my status</p>
+                                    </div>
+                                </div>
+                            )
+
+                            return (
+                                <div className="flex relative w-full">
+                                    <Avatar>
+                                        <AvatarImage src={imageUrl} />
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+
+                                    <div className="text-left w-full">
+                                        <h4 className="text-[1rem] text-black ml-5">Loading...</h4>
+                                        <p className="text-muted-foreground text-[0.8125rem] ml-5">Wait a moment</p>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    }}
+                    appearance={{
+                        allowedContent: { display: 'none' },
+                        button: { border: 'none', background: '#fff', cursor: 'pointer', height: '100%', width: '100%', justifyContent: 'start' },
+                    }}
+                    endpoint="statusImage"
+                    onUploadError={(err: Error) => {
+                        console.log(err);
+                    }}
+                />
+
                 <DropdownMenu>
                     <DropdownMenuTrigger>
-                        <button className="flex m-6 mb-0 relative">
-                            <Avatar>
-                                <AvatarImage src={imageUrl} />
-                                <AvatarFallback>CN</AvatarFallback>
-                            </Avatar>
-                            {noStatus ? (
-                                <span
-                                    className="
-                            absolute
-                            flex
-                            rounded-full 
-                            bg-green-500 
-                            top-6
-                            left-8
-                            ring-2 
-                            ring-white 
-                            h-2 
-                            w-2 
-                            md:h-3 
-                            md:w-3
-                            items-center
-                            justify-center
-                        "
-                                >
-                                    <img src="/images/Plus.svg" />
-                                </span>
-                            ) : null}
-                            <div className="ml-4 text-left">
-                                <h4 className="text-[1rem]">My Status</h4>
-                                <p className="text-muted-foreground text-[0.8125rem]">Add to my status</p>
-                            </div>
-                        </button>
+
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="shadow-lg shadow-gray-400">
                         <DropdownMenuItem className="p-3">
                             <FileUpload
-                                endpoint="serverImage"
+                                endpoint="statusImage"
                             />
                         </DropdownMenuItem>
                         <DropdownMenuItem className="p-3">

@@ -12,8 +12,24 @@ const FileUpload = ({
     endpoint
 }: FileUploadProps) => {
     return (
-        <div>
-            <UploadButton
+        <div><UploadButton
+            endpoint="messageFile"
+            onBeforeUploadBegin={(res: any) => {
+                console.log("uploading started")
+                return res
+            }}
+            onUploadBegin={(res) => { console.log("uploading started") }}
+            onClientUploadComplete={(res) => {
+                // Do something with the response
+                console.log("Files: ", res);
+                alert("Upload Completed");
+            }}
+            onUploadError={(error: Error) => {
+                // Do something with the error.
+                alert(`ERROR! ${error.message}`);
+            }}
+        />
+            {/* <UploadButton
                 content={{
                     button({ ready }) {
                         if (ready) return <div className="flex">
@@ -32,13 +48,14 @@ const FileUpload = ({
                     button: { border: 'none', background: '#fff', cursor: 'pointer' },
                 }}
                 endpoint={endpoint}
+                onUploadBegin={() => console.log("uploading started")}
                 onClientUploadComplete={(res: any) => {
                     console.log("UPLOADING");
                 }}
                 onUploadError={(err: Error) => {
                     console.log(err);
                 }}
-            />
+            /> */}
         </div>
     );
 }

@@ -21,24 +21,17 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { User } from "@prisma/client"
 
 interface DesktopSidebarHeaderProps {
-    user: User
+    user: User & {
+        following?: User[]
+    }
 }
 
 const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
     user
 }) => {
-    // const { members } = useActiveList();
-    // const { currentUserPrisma } = getCurrentUser();
-    // const isActive = members.indexOf(currentUserPrisma?.phoneNumber!) !== -1;
     const [searchText, setSearchText] = useState("")
-    const isActive = true
     const [contacts, setContacts] = useState<User[]>([])
     useEffect(() => {
-        // this is NOT an error, following exists in user, 
-        // but it's not defined in the User type
-        // if (user.hasOwnProperty('following') && user.following !== undefined) {
-        //     setContacts(user.following);
-        // }
         if (user?.following !== undefined) {
             setContacts(user.following);
         }
