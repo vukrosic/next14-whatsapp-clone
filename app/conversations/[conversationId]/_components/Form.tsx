@@ -12,6 +12,16 @@ import {
 } from "react-hook-form";
 import axios from "axios";
 import useConversation from "@/app/hooks/useConversation";
+import FileUpload from "@/app/_components/FileUpload";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 
 const Form = () => {
   const { conversationId } = useConversation();
@@ -69,12 +79,41 @@ const Form = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex items-center gap-2 lg:gap-4 w-full"
       >
-        <button>
-          <img src="/images/Emoji.svg" alt="Emoji" width={24} height={24} />
-        </button>
-        <button id="rotateButton" className="transform animate-spin duration-300">
-          <img src="/images/PlusDark.svg" alt="Plus" className="rotate-0" />
-        </button>
+        <img src="/images/Emoji.svg" alt="Emoji" width={24} height={24} />
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <button id="rotateButton" className="transform animate-spin duration-300">
+              <img src="/images/PlusDark.svg" alt="Plus" className="rotate-0" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="shadow-gray-700 shadow-lg text-gray-800">
+            <DropdownMenuItem className="p-3">
+              <img src="/images/DocumentIcon.svg" />
+              <p className="pl-2">Document</p>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-3">
+              <img src="/images/PhotosIcon.svg" />
+              <p className="pl-2">Photos & Videos</p>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-3">
+              <img src="/images/CameraIcon.svg" />
+              <p>Camera</p>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-3">
+              <img src="/images/ContactIcon.svg" />
+              <p>Contact</p>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-3">
+              <img src="/images/PollIcon.svg" />
+              <p>Poll</p>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-3">
+              <img src="/images/NewStickerIcon.svg" />
+              <p>New Sticker</p>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
 
         <MessageInput
           id="message"

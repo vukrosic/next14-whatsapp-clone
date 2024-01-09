@@ -37,18 +37,23 @@ model User {
   followedByIDs String[] @db.ObjectId
   following     User[]   @relation("UserFollows", fields: [followingIDs], references: [id])
   followingIDs  String[] @db.ObjectId
+
+  communityIds String[]    @db.ObjectId
+  Communities  Community[] @relation(fields: [communityIds], references: [id])
 }
 
-// model Contact {
-//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-//   createdAt DateTime @default(now())
+model Community {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
 
-//   userId String @unique @db.ObjectId
-//   user   User   @relation("user", fields: [userId], references: [id])
+  membersIds String[] @db.ObjectId
+  members    User[]   @relation(fields: [membersIds], references: [id])
 
-//   phoneNumber    String
-//   contactedUsers User[]
-// }
+  conversationIds String[]       @db.ObjectId
+  Conversations   Conversation[] @relation(fields: [conversationIds], references: [id])
+}
 
 model Conversation {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -62,6 +67,9 @@ model Conversation {
 
   userIds String[] @db.ObjectId
   users   User[]   @relation(fields: [userIds], references: [id])
+
+  Community   Community[] @relation(fields: [communityId], references: [id])
+  communityId String[]    @db.ObjectId
 }
 
 model Message {

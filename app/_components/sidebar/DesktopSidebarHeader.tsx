@@ -63,7 +63,7 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
         </nav>
         <nav className="flex justify-between space-x-5 mr-4 items-center">
           <CommunitiesSheet />
-          <StatusSheet />
+          <StatusSheet imageUrl={currentUser.imageUrl || undefined} />
           <ChannelsSheet />
           <NewChatSheet user={currentUser} />
 

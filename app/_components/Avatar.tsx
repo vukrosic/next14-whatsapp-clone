@@ -12,7 +12,6 @@ interface AvatarProps {
 const Avatar: React.FC<AvatarProps> = ({ user }) => {
   const { members } = useActiveList();
   const isActive = members.indexOf(user?.phoneNumber!) !== -1;
-  // const isActive = true
 
   return (
     <div className="relative">

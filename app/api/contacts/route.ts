@@ -14,8 +14,7 @@ export async function POST(
         if (!currentUserPrisma?.id) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
-        console.log("body")
-        console.log(body)
+
         if (action === "add") {
             const user = await db.user.update({
                 where: {

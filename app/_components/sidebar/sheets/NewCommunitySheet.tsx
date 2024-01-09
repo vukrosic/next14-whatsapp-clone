@@ -19,15 +19,33 @@ import { getCurrentUser } from "@/app/actions/getCurrentUser"
 import Image from "next/image"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
+import axios from "axios"
 
 const NewCommunitySheet = () => {
     const [communityCreatorVisible, setCommunityCreatorVisible] = useState(false)
     const [communityName, setCommunityName] = useState("")
+    const [communityDescription, setCommunityDescription] = useState("Hi everyone! This community is for members to chat in topic-based groups and get important announcements.")
+
+    const handleCreateCommunity = () => {
+        // use axios to send a post request to /api/communities with body
+        // { name: communityName }
+        const body = {
+            name: communityName,
+            description: communityDescription,
+        }
+        axios.post("/api/communities", body)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <button className="flex m-2 items-center">
+                <button className="flex m-2 items-center w-full">
                     <div className="flex bg-[#00a884] rounded-xl w-12 h-12 items-center justify-center">
                         <Image className='hover:cursor-pointer' src='/images/CommunityWhite.svg' alt="New" width={30} height={30} />
                     </div>
@@ -65,7 +83,10 @@ const NewCommunitySheet = () => {
                             </button>
 
                         </div>
-                    </ScrollArea> :
+                    </ScrollArea>
+
+                    :
+
                     <div className="flex flex-col justify-center">
                         <div className="flex items-center justify-center my-10">
                             <img src="/images/Lightbulb.svg" className="mr-1" />
@@ -88,12 +109,13 @@ const NewCommunitySheet = () => {
                         <Label className="mt-16 ml-12 text-muted-foreground text-xs">Community description</Label>
                         <Textarea
                             placeholder="Community description"
-                            value={"Hi everyone! This community is for members to chat in topic-based groups and get important announcements."}
+                            value={communityDescription}
+                            onChange={(e) => setCommunityDescription(e.target.value)}
                             className="w-10/12 m-auto border-0 border-b-2 border-gray-400 focus:border-primary"
                         />
 
                         <button className="bg-primary rounded-full w-12 h-12 flex items-center justify-center mt-8 m-auto"
-                            onClick={() => setCommunityCreatorVisible(true)}>
+                            onClick={handleCreateCommunity}>
                             <img
                                 src="/images/CheckmarkWhite.svg"
                             />
