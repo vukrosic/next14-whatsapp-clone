@@ -19,7 +19,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import FileUpload from "../../FileUpload"
+import FileUpload from "../../../FileUpload"
 import { UploadButton } from "@/lib/uploadthing"
 import {
     Dialog,
@@ -29,19 +29,31 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import StoryViewer from "../../StoryViewer"
+import StoryViewer from "../../../StoryViewer"
+import { currentUser } from "@clerk/nextjs"
 
 
 
 interface StatusSheetProps {
-    imageUrl?: string;
+    profileImageUrl?: string;
+    statusImageUrl?: string;
 }
 
 const StatusSheet: React.FC<StatusSheetProps> = ({
-    imageUrl
+    profileImageUrl,
+    statusImageUrl
 }) => {
-    const [noStatus, setNoStatus] = useState(false)
+    const [hasStory, setHasStory] = useState(true)
     const [isAnimationStarted, setIsAnimationStarted] = useState(false);
+    const [storyViewer, setStoryViewer] = useState(false);
+
+    const openViewer = () => {
+        setStoryViewer(true);
+    };
+
+    const closeViewer = () => {
+        setStoryViewer(false);
+    };
 
     return (
         <Sheet>
@@ -86,7 +98,7 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                         </div>
                     </div>
                 </SheetHeader>
-                {noStatus ? (
+                {hasStory ? (
                     <div>
                         <UploadButton
                             className="h-16 pt-5 pl-4"
@@ -95,7 +107,7 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                                     if (ready) return (
                                         <div className="flex relative w-full">
                                             <Avatar>
-                                                <AvatarImage src={imageUrl} />
+                                                <AvatarImage src={profileImageUrl} />
                                                 <AvatarFallback>CN</AvatarFallback>
                                             </Avatar>
                                             <span
@@ -126,7 +138,7 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                                     return (
                                         <div className="flex relative w-full">
                                             <Avatar>
-                                                <AvatarImage src={imageUrl} />
+                                                <AvatarImage src={profileImageUrl} />
                                                 <AvatarFallback>CN</AvatarFallback>
                                             </Avatar>
 
@@ -170,19 +182,45 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
 
                     <div>
                         {/* if there is story */}
-                        <Dialog>
-                            <DialogTrigger>Open</DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                    <DialogDescription>
-                                        This action cannot be undone. This will permanently delete your account
-                                        and remove your data from our servers.
-                                    </DialogDescription>
-                                </DialogHeader>
-                                <StoryViewer startAnimation={isAnimationStarted} />
-                            </DialogContent>
-                        </Dialog>
+
+                        <div className="min-h-screen flex justify-center">
+                            <button className="flex relative w-full mt-3" onClick={openViewer}>
+                                <Avatar>
+                                    <AvatarImage src={profileImageUrl} />
+                                    <AvatarFallback>CN</AvatarFallback>
+                                </Avatar>
+                                <span
+                                    className="
+                                    absolute
+                                    flex
+                                    rounded-full 
+                                    bg-[#00a884]
+                                    top-6
+                                    left-8
+                                    ring-2 
+                                    ring-white 
+                                    h-[14px]
+                                    w-[14px]
+                                    items-center
+                                    justify-center
+                                    "
+                                >
+                                    <img src="/images/Plus.svg" />
+                                </span>
+                                <div className="text-left w-full">
+                                    <h4 className="text-[1rem] text-black ml-5">My Status</h4>
+                                    <p className="text-muted-foreground text-[0.8125rem] ml-5">Add to my status</p>
+                                </div>
+                            </button>
+
+                            {storyViewer && (
+                                <StoryViewer
+                                    statusImageUrl={statusImageUrl}
+                                    startAnimation={isAnimationStarted}
+                                    onClose={closeViewer}
+                                />
+                            )}
+                        </div>
                     </div>
                 )}
 

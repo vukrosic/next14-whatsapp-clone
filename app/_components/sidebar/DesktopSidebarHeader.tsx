@@ -7,9 +7,9 @@ import { useState } from "react";
 import { Conversation, User } from "@prisma/client";
 import Avatar from "../Avatar";
 import CommunitiesDrawer from "./sheets/CommunitiesSheet";
-import StatusDrawer from "./sheets/StatusSheet";
+import StatusDrawer from "./sheets/status/StatusSheet";
 import CommunitiesSheet from "./sheets/CommunitiesSheet";
-import StatusSheet from "./sheets/StatusSheet";
+import StatusSheet from "./sheets/status/StatusSheet";
 import ChannelsSheet from "./sheets/ChannelsSheet";
 import NewChatSheet from "./sheets/NewChatSheet";
 import ProfileSheet from "./sheets/ProfileSheet";
@@ -63,7 +63,10 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
         </nav>
         <nav className="flex justify-between space-x-5 mr-4 items-center">
           <CommunitiesSheet />
-          <StatusSheet imageUrl={currentUser.imageUrl || undefined} />
+          <StatusSheet
+            profileImageUrl={currentUser.imageUrl || undefined}
+            statusImageUrl={currentUser.statusImageUrl || undefined}
+          />
           <ChannelsSheet />
           <NewChatSheet user={currentUser} />
 

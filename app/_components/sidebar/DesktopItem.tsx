@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Link from "next/link";
 import Button from '../Button';
 import Image from 'next/image';
-import StatusSheet from './sheets/StatusSheet';
+import StatusSheet from './sheets/status/StatusSheet';
 
 
 interface DesktopItemProps {
