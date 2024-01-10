@@ -19,6 +19,7 @@ model User {
   username       String   @unique
   phoneNumber    String   @unique
   imageUrl       String?
+  statusImageUrl String?
   about          String?
   externalUserId String   @unique
   hashedPassword String?

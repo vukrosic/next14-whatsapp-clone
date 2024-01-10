@@ -21,6 +21,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import FileUpload from "../../FileUpload"
 import { UploadButton } from "@/lib/uploadthing"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import StoryViewer from "../../StoryViewer"
+
 
 
 interface StatusSheetProps {
@@ -30,7 +40,8 @@ interface StatusSheetProps {
 const StatusSheet: React.FC<StatusSheetProps> = ({
     imageUrl
 }) => {
-    const [noStatus, setNoStatus] = useState(true)
+    const [noStatus, setNoStatus] = useState(false)
+    const [isAnimationStarted, setIsAnimationStarted] = useState(false);
 
     return (
         <Sheet>
@@ -75,18 +86,20 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                         </div>
                     </div>
                 </SheetHeader>
-                <UploadButton
-                    className="h-16 pt-5 pl-4"
-                    content={{
-                        button({ ready }) {
-                            if (ready) return (
-                                <div className="flex relative w-full">
-                                    <Avatar>
-                                        <AvatarImage src={imageUrl} />
-                                        <AvatarFallback>CN</AvatarFallback>
-                                    </Avatar>
-                                    <span
-                                        className="
+                {noStatus ? (
+                    <div>
+                        <UploadButton
+                            className="h-16 pt-5 pl-4"
+                            content={{
+                                button({ ready }) {
+                                    if (ready) return (
+                                        <div className="flex relative w-full">
+                                            <Avatar>
+                                                <AvatarImage src={imageUrl} />
+                                                <AvatarFallback>CN</AvatarFallback>
+                                            </Avatar>
+                                            <span
+                                                className="
                                     absolute
                                     flex
                                     rounded-full 
@@ -100,57 +113,78 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                                     items-center
                                     justify-center
                                     "
-                                    >
-                                        <img src="/images/Plus.svg" />
-                                    </span>
-                                    <div className="text-left w-full">
-                                        <h4 className="text-[1rem] text-black ml-5">My Status</h4>
-                                        <p className="text-muted-foreground text-[0.8125rem] ml-5">Add to my status</p>
-                                    </div>
-                                </div>
-                            )
+                                            >
+                                                <img src="/images/Plus.svg" />
+                                            </span>
+                                            <div className="text-left w-full">
+                                                <h4 className="text-[1rem] text-black ml-5">My Status</h4>
+                                                <p className="text-muted-foreground text-[0.8125rem] ml-5">Add to my status</p>
+                                            </div>
+                                        </div>
+                                    )
 
-                            return (
-                                <div className="flex relative w-full">
-                                    <Avatar>
-                                        <AvatarImage src={imageUrl} />
-                                        <AvatarFallback>CN</AvatarFallback>
-                                    </Avatar>
+                                    return (
+                                        <div className="flex relative w-full">
+                                            <Avatar>
+                                                <AvatarImage src={imageUrl} />
+                                                <AvatarFallback>CN</AvatarFallback>
+                                            </Avatar>
 
-                                    <div className="text-left w-full">
-                                        <h4 className="text-[1rem] text-black ml-5">Loading...</h4>
-                                        <p className="text-muted-foreground text-[0.8125rem] ml-5">Wait a moment</p>
-                                    </div>
-                                </div>
-                            )
-                        }
-                    }}
-                    appearance={{
-                        allowedContent: { display: 'none' },
-                        button: { border: 'none', background: '#fff', cursor: 'pointer', height: '100%', width: '100%', justifyContent: 'start' },
-                    }}
-                    endpoint="statusImage"
-                    onUploadError={(err: Error) => {
-                        console.log(err);
-                    }}
-                />
+                                            <div className="text-left w-full">
+                                                <h4 className="text-[1rem] text-black ml-5">Loading...</h4>
+                                                <p className="text-muted-foreground text-[0.8125rem] ml-5">Wait a moment</p>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            }}
+                            appearance={{
+                                allowedContent: { display: 'none' },
+                                button: { border: 'none', background: '#fff', cursor: 'pointer', height: '100%', width: '100%', justifyContent: 'start' },
+                            }}
+                            endpoint="statusImage"
+                            onUploadError={(err: Error) => {
+                                console.log(err);
+                            }}
+                        />
 
-                <DropdownMenu>
-                    <DropdownMenuTrigger>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger>
 
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="shadow-lg shadow-gray-400">
-                        <DropdownMenuItem className="p-3">
-                            <FileUpload
-                                endpoint="statusImage"
-                            />
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="p-3">
-                            <img src="/images/Edit.svg" className="mr-2" />
-                            <p>Text</p>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="shadow-lg shadow-gray-400">
+                                <DropdownMenuItem className="p-3">
+                                    <FileUpload
+                                        endpoint="statusImage"
+                                    />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="p-3">
+                                    <img src="/images/Edit.svg" className="mr-2" />
+                                    <p>Text</p>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+
+                ) : (
+
+                    <div>
+                        {/* if there is story */}
+                        <Dialog>
+                            <DialogTrigger>Open</DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                    <DialogDescription>
+                                        This action cannot be undone. This will permanently delete your account
+                                        and remove your data from our servers.
+                                    </DialogDescription>
+                                </DialogHeader>
+                                <StoryViewer startAnimation={isAnimationStarted} />
+                            </DialogContent>
+                        </Dialog>
+                    </div>
+                )}
 
                 <SheetFooter>
                     <div className="flex m-auto mt-6">
