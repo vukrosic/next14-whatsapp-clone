@@ -1,27 +1,33 @@
 import StoryViewer from "@/app/_components/StoryViewer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UploadButton } from "@/lib/uploadthing"
+import { User } from "@prisma/client";
 import { useState } from "react";
 
 interface StatusButtonProps {
-    profileImageUrl?: string;
+    user: User;
     statusTitle?: string;
     statusDescription?: string;
+    hasStory?: boolean;
 }
 
 function StatusButton({
-    profileImageUrl,
+    user,
     statusTitle,
-    statusDescription
+    statusDescription,
+    hasStory
 }: StatusButtonProps
 ) {
+    const AvatarTailwind = hasStory ? "border-green-400 border-2 rounded-full" : "";
+
     return (
         <div className="flex relative w-full pt-5 pl-4">
-            <Avatar>
-                <AvatarImage src={profileImageUrl} />
+            <Avatar className={AvatarTailwind}>
+                <AvatarImage src={user.profileImageUrl || undefined} />
                 <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <span className="
+            {!hasStory && (
+                <span className="
                 absolute
                 flex
                 rounded-full 
@@ -35,8 +41,8 @@ function StatusButton({
                 items-center
                 justify-center
             ">
-                <img src="/images/Plus.svg" />
-            </span>
+                    <img src="/images/Plus.svg" />
+                </span>)}
             <div className="text-left w-full">
                 <h4 className="text-[1rem] text-black ml-5">{statusTitle}</h4>
                 <p className="text-muted-foreground text-[0.8125rem] ml-5">{statusDescription}</p>
@@ -47,18 +53,15 @@ function StatusButton({
 
 
 interface StatusSidebarButtonProps {
-    profileImageUrl?: string;
-    ready?: boolean;
-    hasStory?: boolean;
+    user: User;
 }
 
 
 const StatusSidebarButton: React.FC<StatusSidebarButtonProps> = ({
-    profileImageUrl,
-    ready,
-    hasStory
+    user
 }) => {
     const [showStory, setShowStory] = useState(false);
+    const hasStory = user.statusImageUrl !== "" ? true : false
     const toggleShowStory = () => {
         setShowStory(!showStory);
     }
@@ -66,22 +69,27 @@ const StatusSidebarButton: React.FC<StatusSidebarButtonProps> = ({
     return (
         <div>
             {hasStory ? (
-                <div
-                    onClick={() => toggleShowStory()}
-                >
-                    <StatusButton
-                        statusTitle={"My Status"}
-                        statusDescription={"TO DO: statusDateTime"}
-                        profileImageUrl={profileImageUrl}
-                    />
+                <div>
+                    <button
+                        onClick={() => toggleShowStory()}
+                    >
+                        <StatusButton
+                            user={user}
+                            statusTitle={"My Status"}
+                            statusDescription={"TO DO: statusDateTime"}
+                            hasStory={hasStory}
+                        />
+                    </button>
                     {
-                        // showStory && (
-                        //     <StoryViewer
-                        //         statusImageUrl={statusImageUrl}
-                        //         startAnimation={isAnimationStarted}
-                        //         onClose={closeViewer}
-                        //     />
-                        // )
+                        showStory && (
+                            <StoryViewer
+                                user={user}
+                                onClose={() => toggleShowStory()}
+
+                            // startAnimation={isAnimationStarted}
+                            // onClose={closeViewer}
+                            />
+                        )
                     }
                 </div>
             ) : (
@@ -93,7 +101,9 @@ const StatusSidebarButton: React.FC<StatusSidebarButtonProps> = ({
                             return (
                                 <StatusButton
                                     statusTitle={statusTitle}
-                                    statusDescription={statusDescription} profileImageUrl={profileImageUrl}
+                                    statusDescription={statusDescription}
+                                    user={user}
+                                    hasStory={hasStory}
                                 />
                             )
                         }
@@ -113,3 +123,4 @@ const StatusSidebarButton: React.FC<StatusSidebarButtonProps> = ({
 }
 
 export default StatusSidebarButton;
+

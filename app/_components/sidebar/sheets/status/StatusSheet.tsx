@@ -38,17 +38,14 @@ import { User } from "@prisma/client"
 
 
 interface StatusSheetProps {
-    profileImageUrl?: string;
-    statusImageUrl?: string;
+    user: User;
 }
 
 
 
 const StatusSheet: React.FC<StatusSheetProps> = ({
-    profileImageUrl,
-    statusImageUrl
+    user
 }) => {
-    const hasStory = statusImageUrl !== "" ? true : false
     const [isAnimationStarted, setIsAnimationStarted] = useState(false);
     const [storyViewer, setStoryViewer] = useState(false);
 
@@ -127,61 +124,11 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                         </div>
                     </div>
                 </SheetHeader>
-                {hasStory ? (
-                    <div>
-                        <StatusSidebarButton
-                            profileImageUrl={profileImageUrl}
-                            hasStory={hasStory}
-                        ></StatusSidebarButton>
-                        {/* if there is story */}
-                        {/* <div className="min-h-screen flex justify-center">
-                            <button className="flex relative w-full mt-3" onClick={openViewer}>
-                                <Avatar>
-                                    <AvatarImage src={profileImageUrl} />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                <span
-                                    className="
-                                    absolute
-                                    flex
-                                    rounded-full 
-                                    bg-[#00a884]
-                                    top-6
-                                    left-8
-                                    ring-2 
-                                    ring-white 
-                                    h-[14px]
-                                    w-[14px]
-                                    items-center
-                                    justify-center
-                                    "
-                                >
-                                    <img src="/images/Plus.svg" />
-                                </span>
-                                <div className="text-left w-full">
-                                    <h4 className="text-[1rem] text-black ml-5">My Status</h4>
-                                    <p className="text-muted-foreground text-[0.8125rem] ml-5">Add to my status</p>
-                                </div>
-                            </button>
 
-                            {storyViewer && (
-                                <StoryViewer
-                                    statusImageUrl={statusImageUrl}
-                                    startAnimation={isAnimationStarted}
-                                    onClose={closeViewer}
-                                />
-                            )}
-                        </div> */}
-                    </div>
-                ) : (
-                    <div>
-                        <StatusSidebarButton
-                            profileImageUrl={profileImageUrl}
-                            hasStory={hasStory}
-                        ></StatusSidebarButton>
-                    </div>
-                )
-                }
+                <StatusSidebarButton
+                    user={user}
+                ></StatusSidebarButton>
+
                 <SheetFooter>
                     <div className="flex m-auto mt-6">
                         <img src="/images/Padlock.svg" className="m-auto" />

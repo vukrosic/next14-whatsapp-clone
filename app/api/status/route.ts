@@ -58,16 +58,12 @@ export async function DELETE(
 ) {
     try {
         const { currentUserPrisma, currentUserClerk } = await getCurrentUser();
-        const body = await request.json();
-        const {
-            statusImageUrl
-        } = body;
 
         if (!currentUserPrisma?.id || !currentUserClerk?.phoneNumbers[0]?.phoneNumber) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
 
-        await db.user.update({
+        const user = await db.user.update({
             data: {
                 statusImageUrl: ""
             },
@@ -75,7 +71,7 @@ export async function DELETE(
                 id: currentUserPrisma.id
             }
         });
-        return NextResponse.json("Removed status image URL from database!", { status: 200 })
+        return NextResponse.json(user)
     } catch (error) {
         console.log(error, 'ERROR_MESSAGES')
         return new NextResponse('Error', { status: 500 });
