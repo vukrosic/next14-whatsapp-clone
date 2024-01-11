@@ -37,7 +37,7 @@ export async function POST(
         if (!currentUserPrisma?.id || !currentUserClerk?.phoneNumbers[0]?.phoneNumber) {
             return new NextResponse('Unauthorized', { status: 401 });
         }
-        await db.user.update({
+        const user = await db.user.update({
             data: {
                 statusImageUrl: statusImageUrl
             },
@@ -45,7 +45,7 @@ export async function POST(
                 id: currentUserPrisma.id
             }
         });
-        return NextResponse.json("Successfully saved status image URL to database!", { status: 200 })
+        return NextResponse.json(user)
     } catch (error) {
         console.log(error, 'ERROR_MESSAGES')
         return new NextResponse('Error', { status: 500 });

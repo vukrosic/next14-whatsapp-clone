@@ -13,13 +13,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import axios from "axios";
+import { toast } from "sonner"
 
 interface StoryViewerProps {
     onClose: () => void;
-    user: User
+    user: User;
+    onDeleteStory: () => void;
 }
 
-const StoryViewer = ({ onClose, user }: StoryViewerProps) => {
+const StoryViewer = ({ onClose, user, onDeleteStory }: StoryViewerProps) => {
     // Progress bar logic
     const timerInMS = 4000; // story duration in milliseconds
     const initialDeadline = Date.now() + timerInMS;
@@ -63,34 +65,21 @@ const StoryViewer = ({ onClose, user }: StoryViewerProps) => {
         onClose();
     };
 
-    const handleDeleteStory = () => {
-        axios.delete('/api/status')
-            .then(res => {
-                user = res.data
-                console.log(res.data)
-                onClose()
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-
     return (
         <>
             {/* Top bar */}
             <div
-                className="fixed top-0 left-0 w-screen h-fit flex justify-center items-start z-20 pb-3 bg-gradient-to-t from-transparent to-black"
+                className="fixed top-0 left-0 w-screen h-fit flex justify-center items-start z-[20] pb-3 bg-gradient-to-t from-transparent to-black"
             >
                 <div className="flex flex-col w-fit pt-4 text-white">
                     <Progress value={progress} className="w-[500px] h-2" />
 
                     <div className="flex mr-auto mt-4">
-                        <Avatar className="w-full">
+                        <Avatar>
                             <AvatarImage src={user.profileImageUrl || undefined} />
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col ml-3">
                             <p className="text-white text-border">{user.username}</p>
                             <p className="text-white text-muted-foreground text-xs">today</p>
                         </div>
@@ -99,7 +88,7 @@ const StoryViewer = ({ onClose, user }: StoryViewerProps) => {
 
                 <Trash2
                     className="absolute top-12 right-[450px] text-white text-2xl cursor-pointer"
-                    onClick={handleDeleteStory}
+                    onClick={onDeleteStory}
                 />
 
                 <ArrowLeft
@@ -112,22 +101,23 @@ const StoryViewer = ({ onClose, user }: StoryViewerProps) => {
                 />
 
 
-            </div>
-            <div className="z-[25] flex">asdfasdfasdf
-
-            </div>
-            {/* Image */}
+            </div >
+            {/* Story Image */}
             <div
-                className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-cover bg-center z-10">
+                className="fixed top-0 left-0 w-screen h-screen flex justify-center items-center bg-cover bg-center z-[10]">
+
 
                 <img
                     src={user.statusImageUrl || undefined}
                     alt="Story"
                     className="max-w-screen max-h-screen bg-cover bg-center"
                 />
+
+                <div className="placeholder-image max-w-screen max-h-screen bg-cover bg-center" />
+
             </div>
 
-            {/* Background */}
+            {/* Background image */}
             <div
                 style={{
                     backgroundImage: `url(${user.statusImageUrl})`,
@@ -135,7 +125,17 @@ const StoryViewer = ({ onClose, user }: StoryViewerProps) => {
                     width: '109vw',
                     height: '109vh',
                 }}
-                className="fixed top-[-50px] left-[-50px] bg-cover bg-center"
+                className="fixed top-[-50px] left-[-50px] bg-cover bg-center z-[5]"
+            ></div >
+            {/* Background color while images load */}
+            <div
+                style={{
+                    backgroundColor: '#000000',
+                    filter: 'blur(30px)',
+                    width: '109vw',
+                    height: '109vh',
+                }}
+                className="fixed top-[-50px] left-[-50px] bg-cover bg-center z-[1]"
             ></div >
         </>
     );

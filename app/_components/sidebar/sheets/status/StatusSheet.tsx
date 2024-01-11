@@ -46,37 +46,6 @@ interface StatusSheetProps {
 const StatusSheet: React.FC<StatusSheetProps> = ({
     user
 }) => {
-    const [isAnimationStarted, setIsAnimationStarted] = useState(false);
-    const [storyViewer, setStoryViewer] = useState(false);
-
-    // axios.get('/api/status')
-    //     .then(res => {
-    //         console.log("response: ")
-    //         console.log(res.data.statusImageUrl)
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //     })
-    // // make axios get to /api/status
-    // useEffect(() => {
-    //     axios.get('/api/status')
-    //         .then(res => {
-    //             console.log("response: ")
-    //             console.log(res.data)
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-    // }, [])
-
-    const openViewer = () => {
-        setStoryViewer(true);
-    };
-
-    const closeViewer = () => {
-        setStoryViewer(false);
-    };
-
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -91,37 +60,6 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                             <img src="/images/ArrowLeft.svg" className="mr-7 ml-5 cursor-pointer" />
                         </SheetClose>
                         <SheetTitle className="text-white flex items-center justify-center ">Status</SheetTitle>
-                        {/* Uploading story button in header */}
-                        <div className="flex ml-auto w-[90px] h-[40px]">
-                            <UploadButton
-                                content={{
-                                    button({ ready }) {
-                                        return (
-                                            <img src="/images/Plus.svg" className="bg-primary cursor-pointer" />
-                                        )
-                                    }
-                                }}
-                                appearance={{
-                                    allowedContent: { display: 'none' },
-                                    button: { border: 'none', background: '#008069', cursor: 'pointer', height: '100%', width: '100%', justifyContent: 'start' },
-                                }}
-                                endpoint="statusImage"
-                                onUploadError={(err: Error) => {
-                                    console.log(err);
-                                }}
-                            />
-                            {/* More button */}
-                            <DropdownMenu>
-                                <DropdownMenuTrigger>
-                                    <img src="/images/MenuWhite.svg" className="p-2 cursor-pointer" />
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="shadow-md shadow-gray-500">
-                                    <DropdownMenuItem className="p-3">
-                                        <p>TO DO: Status Privacy</p>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </div>
                     </div>
                 </SheetHeader>
 
@@ -132,7 +70,7 @@ const StatusSheet: React.FC<StatusSheetProps> = ({
                 <SheetFooter>
                     <div className="flex m-auto mt-6">
                         <img src="/images/Padlock.svg" className="m-auto" />
-                        <p className="text-[12px]">Your status updates are <span className="text-blue-500 text-[12px]">end-to-end encrypted</span></p>
+                        <p className="text-[12px] ml-1">Your data is securely stored and private.</p>
                     </div>
                 </SheetFooter>
             </SheetContent >
