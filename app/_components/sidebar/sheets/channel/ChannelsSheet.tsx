@@ -29,13 +29,13 @@ import NewChannelSheet from "./NewChannelSheet"
 const ChannelsSheet = () => {
     const [showNewChannelSheet, setShowNewChannelSheet] = useState(false)
     const [channels, setChannels] = useState<Conversation[]>([]);
-    const conversations = axios.get('/api/conversations')
-        .then((response) => {
-            setChannels(response.data.filter((conversation: Conversation) => conversation.isChannel === true));
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+    // const conversations = axios.get('/api/conversations')
+    //     .then((response) => {
+    //         setChannels(response.data.filter((conversation: Conversation) => conversation.isChannel === true));
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
 
     return (
         <Sheet>

@@ -50,6 +50,10 @@ const NewChannelSheet = ({
 
     const handleCreateChannel = () => {
         setDisableButton(true);
+        toast({
+            title: "Creating new channel...",
+            duration: 30000,
+        })
         axios.post('/api/conversations/channels', {
             name: name,
             description: description
@@ -57,6 +61,11 @@ const NewChannelSheet = ({
             .then((response) => {
                 console.log("Created new channel in NewChannelSheet")
                 console.log(response);
+                toast({
+                    title: "New channel created!",
+                    className: "bg-green-500",
+                    duration: 2000,
+                })
                 setDisableButton(false);
             })
             .catch((error) => {
@@ -81,12 +90,37 @@ const NewChannelSheet = ({
                             button({ ready }) {
                                 return (
                                     <div>
-                                        <div className="relative">
-                                            <img src="images/IconPlaceholder.svg" className="text-[#d1d7db]" />
-                                            <img src="images/Camera.svg" className="absolute top-1/2 left-1/2 transform -translate-x-3 -translate-y-6" />
-                                            <p className="absolute top-1/2 left-1/2 transform -translate-x-14 text-[#ffffff] text-center text-xs">ADD CHANNEL ICON</p>
-                                        </div>
+                                        {imageUrl === "" ? (
+                                            <div className="relative">
+                                                <div className="w-[212px] h-[212px] rounded-full overflow-hidden">
+                                                    <img
+                                                        src="images/IconPlaceholder.svg"
+                                                        className="w-full h-full text-[#d1d7db]"
+                                                        alt="Placeholder"
+                                                    />
+                                                </div>
+                                                <img
+                                                    src="images/Camera.svg"
+                                                    className="absolute top-1/2 left-1/2 transform -translate-x-3 -translate-y-6"
+                                                    alt="Camera Icon"
+                                                />
+                                                <p className="absolute top-1/2 left-1/2 transform -translate-x-14 text-[#ffffff] text-center text-xs">
+                                                    ADD CHANNEL ICON
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <div className="relative">
+                                                <div className="w-[212px] h-[212px] rounded-full overflow-hidden">
+                                                    <img
+                                                        src={imageUrl}
+                                                        className="w-full h-full object-cover"
+                                                        alt="Uploaded Image"
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
+
                                 )
                             }
                         }}
