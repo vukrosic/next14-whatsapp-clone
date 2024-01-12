@@ -58,11 +58,12 @@ const NewChatSheet: React.FC<DesktopSidebarHeaderProps> = ({
 
     return (
         <div>
-            <GroupChatModal
-                users={currentUser.following}
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            />
+            {(currentUser !== undefined) &&
+                <GroupChatModal
+                    users={currentUser.following}
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                />}
 
             <Sheet>
                 <SheetTrigger asChild>

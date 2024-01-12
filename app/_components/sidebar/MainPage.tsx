@@ -1,7 +1,6 @@
 import { getCurrentUser } from '@/app/actions/getCurrentUser';
 
 import DesktopSidebarHeader from './DesktopSidebarHeader';
-import MobileFooter from './MobileFooter';
 import ConversationList from '@/app/conversations/_components/ConversationList';
 import getConversations from '@/app/actions/getConversations';
 import getContacts from '@/app/actions/getContacts';
@@ -32,7 +31,6 @@ async function MainPage({ children }: {
           initialItems={conversations}
         />
       </aside>
-      <MobileFooter />
       <main className='w-full flex justify-center'>
         {children}
       </main>

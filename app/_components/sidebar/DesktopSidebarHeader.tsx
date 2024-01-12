@@ -1,18 +1,15 @@
 'use client';
 
 import DesktopItem from "./DesktopItem";
-import useRoutes from "@/app/hooks/useRoutes";
-// import SettingsModal from "./SettingsModal";
 import { useState } from "react";
 import { Conversation, User } from "@prisma/client";
 import Avatar from "../Avatar";
-import CommunitiesDrawer from "./sheets/CommunitiesSheet";
 import StatusDrawer from "./sheets/status/StatusSheet";
-import CommunitiesSheet from "./sheets/CommunitiesSheet";
 import StatusSheet from "./sheets/status/StatusSheet";
 import ChannelsSheet from "./sheets/channel/ChannelsSheet";
 import NewChatSheet from "./sheets/NewChatSheet";
 import ProfileSheet from "./sheets/ProfileSheet";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import NewChannelSheet from "./sheets/channel/NewChannelSheet";
 
 import {
@@ -25,6 +22,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import ConversationList from "@/app/conversations/_components/ConversationList";
 import { Input } from "@/components/ui/input";
+import { LogOut } from "lucide-react";
+import { useSession, auth, useClerk, SignOutButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 
 interface DesktopSidebarHeaderProps {
@@ -40,9 +40,9 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
   conversations,
   users
 }) => {
-  const routes = useRoutes();
   const [isOpen, setIsOpen] = useState(false);
-
+  const { signOut } = useClerk();
+  const router = useRouter()
   return (
     <>
       {/* <SettingsModal currentUser={currentUser} isOpen={isOpen} onClose={() => setIsOpen(false)} /> */}
@@ -64,29 +64,16 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
           </div>
         </nav>
         <nav className="flex justify-between space-x-5 mr-4 items-center">
-          <CommunitiesSheet />
           <StatusSheet
             user={currentUser}
           />
           <ChannelsSheet currentUserPrisma={currentUser} />
           <NewChatSheet currentUser={currentUser} />
 
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <img
-                src="/images/Menu.svg"
-                alt="Menu"
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-52">
-              <DropdownMenuItem className="p-3">New group</DropdownMenuItem>
-              <DropdownMenuItem className="p-3">New community</DropdownMenuItem>
-              <DropdownMenuItem className="p-3">Starred messages</DropdownMenuItem>
-              <DropdownMenuItem className="p-3">Select chats</DropdownMenuItem>
-              <DropdownMenuItem className="p-3">Settings</DropdownMenuItem>
-              <DropdownMenuItem className="p-3">Log out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <LogOut
+            className="text-[#54656f] cursor-pointer"
+            onClick={() => signOut(() => router.push("/"))}
+          />
         </nav>
       </div>
     </>
