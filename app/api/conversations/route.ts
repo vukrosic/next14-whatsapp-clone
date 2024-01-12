@@ -64,6 +64,7 @@ export async function POST(
         data: {
           name,
           isGroup,
+          isChannel: false,
           ownerId: currentUserPrisma.id,
           users: {
             connect: [

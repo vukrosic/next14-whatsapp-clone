@@ -13,8 +13,6 @@ import AvatarGroup from "@/app/_components/AvatarGroup";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
-import { truncate } from 'fs';
-import { TrendingUp } from 'lucide-react';
 
 // import ProfileDrawer from "./ProfileDrawer";
 
@@ -97,7 +95,9 @@ const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma }) => {
             <div className='flex w-full'>
               <Avatar>
                 <AvatarImage src={conversation.profileImageUrl || undefined} />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarFallback>
+                  {conversation.name ? conversation.name.charAt(0).toUpperCase() : 'CN'}
+                </AvatarFallback>
               </Avatar>
               <div className="flex flex-col ml-2">
                 <div>{conversation.name}</div>
@@ -106,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma }) => {
                 conversation.ownerId !== currentUserPrisma.id && (
                   <Button
                     disabled={disableFollowButton}
-                    className='ml-auto mr-4'
+                    className={`ml-auto mr-4 ${conversation.userIds.includes(currentUserPrisma.id) ? 'bg-white text-primary hover:bg-white border-primary border-2' : 'bg-primary text-white'}`}
                     onClick={() => handleFollowClick(
                       conversation.userIds.includes(currentUserPrisma.id) ? false : true
                     )}

@@ -31,8 +31,7 @@ const ChatId = async ({ params }: { params: IParams }) => {
       <div className="h-full w-full flex flex-col bg-red-500">
         <Header conversation={conversation} currentUserPrisma={currentUserPrisma} />
         <Body initialMessages={messages} />
-        {(conversation.isGroup
-          && conversation.isChannel
+        {(conversation.isChannel
           && conversation.ownerId !== currentUserPrisma.id)
           ? null : (<Form />)}
       </div>

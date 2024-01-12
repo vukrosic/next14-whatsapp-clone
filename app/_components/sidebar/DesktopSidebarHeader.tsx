@@ -28,7 +28,9 @@ import { Input } from "@/components/ui/input";
 
 
 interface DesktopSidebarHeaderProps {
-  currentUser: User,
+  currentUser: User & {
+    following: User[]
+  },
   conversations: Conversation[],
   users: User[]
 }
@@ -67,7 +69,7 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
             user={currentUser}
           />
           <ChannelsSheet currentUserPrisma={currentUser} />
-          <NewChatSheet user={currentUser} />
+          <NewChatSheet currentUser={currentUser} />
 
           <DropdownMenu>
             <DropdownMenuTrigger>

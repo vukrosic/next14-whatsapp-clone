@@ -6,6 +6,7 @@ import ConversationList from '@/app/conversations/_components/ConversationList';
 import getConversations from '@/app/actions/getConversations';
 import getContacts from '@/app/actions/getContacts';
 import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 async function MainPage({ children }: {

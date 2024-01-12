@@ -1,14 +1,12 @@
 import EmptyState from "../_components/EmptyState";
-import getContacts from "../actions/getContacts";
-import getUsers from "../actions/getUsers";
+import { getCurrentUser } from "../actions/getCurrentUser";
 
 const Home = async () => {
-  const users = await getUsers()
-  const contacts = await getContacts()
+  const { currentUserPrisma } = await getCurrentUser()
 
   return (
-    <div className="h-full bg-gray-200">
-      <EmptyState users={users} contacts={contacts} />
+    <div className="h-screen bg-gray-200">
+      <EmptyState user={currentUserPrisma} />
     </div>
   )
 }

@@ -5,7 +5,9 @@ import { User as PrismaUser } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 interface CurrentUser {
-    currentUserPrisma: PrismaUser;
+    currentUserPrisma: PrismaUser & {
+        following: PrismaUser[]
+    };
     currentUserClerk: ClerkUser;
 }
 

@@ -28,7 +28,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
 }) => {
   const [items, setItems] = useState(initialItems);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterActivated, setIsFilterActivated] = useState(false);
   const [searchText, setSearchText] = useState("");
 
@@ -39,13 +38,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
   };
 
 
-  const filteredItems = useMemo(() => {
-    return items.filter((item) =>
-      item.users.some(user =>
-        user.username.toLowerCase().includes(searchText.toLowerCase())
-      )
-    );
-  }, [items, searchText]);
 
 
   const router = useRouter();
@@ -109,42 +101,35 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
 
   return (
-    <>
-      <GroupChatModal
-        users={users}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-      <aside>
-        <div>
-          <div className="space-y-2 flex">
-            <div className="flex bg-gray-200 w-11/12 m-auto rounded-xl mt-2 ml-3">
-              <img src="/images/Search.svg" className="ml-3" />
-              <Input
-                placeholder="Search or start a new chat"
-                className="bg-transparent border-0"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
-            <div className={` rounded-full flex items-center justify-center mr-2 ml-2 ${isFilterActivated ? 'bg-primary' : ''}`}>
-              <img
-                src={filterImageSrc}
-                className='mr-3 ml-3'
-                onClick={handleFilterClick}
-              />
-            </div>
-          </div>
-          {items.map((item) => (
-            <ConversationBox
-              key={item.id}
-              data={item}
-              selected={conversationId === item.id}
+    <aside className="h-[550px] overflow-y-auto">
+      <div>
+        <div className="space-y-2 flex">
+          <div className="flex bg-gray-200 w-11/12 m-auto rounded-xl mt-2 ml-3">
+            <img src="/images/Search.svg" className="ml-3" />
+            <Input
+              placeholder="Search or start a new chat"
+              className="bg-transparent border-0"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
             />
-          ))}
+          </div>
+          <div className={` rounded-full flex items-center justify-center mr-2 ml-2 ${isFilterActivated ? 'bg-primary' : ''}`}>
+            <img
+              src={filterImageSrc}
+              className='mr-3 ml-3'
+              onClick={handleFilterClick}
+            />
+          </div>
         </div>
-      </aside>
-    </>
+        {items.map((item) => (
+          <ConversationBox
+            key={item.id}
+            data={item}
+            selected={conversationId === item.id}
+          />
+        ))}
+      </div>
+    </aside>
   );
 }
 
