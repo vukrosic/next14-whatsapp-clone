@@ -14,7 +14,7 @@ import ChannelsSheet from "./sheets/channel/ChannelsSheet";
 import NewChatSheet from "./sheets/NewChatSheet";
 import ProfileSheet from "./sheets/ProfileSheet";
 import NewChannelSheet from "./sheets/channel/NewChannelSheet";
-import FindChannelsSheet from "./sheets/FindChannelsSheet";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -66,7 +66,7 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
           <StatusSheet
             user={currentUser}
           />
-          <ChannelsSheet />
+          <ChannelsSheet currentUserPrisma={currentUser} />
           <NewChatSheet user={currentUser} />
 
           <DropdownMenu>

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
     Sheet,
     SheetClose,
@@ -24,18 +24,30 @@ import ChannelBox from "./ChannelBox"
 import axios from "axios"
 import { Conversation, User } from "@prisma/client"
 import NewChannelSheet from "./NewChannelSheet"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
+interface ChannelsSheetProps {
+    currentUserPrisma: User;
+}
 
-const ChannelsSheet = () => {
+const ChannelsSheet = ({
+    currentUserPrisma
+}: ChannelsSheetProps) => {
     const [showNewChannelSheet, setShowNewChannelSheet] = useState(false)
     const [channels, setChannels] = useState<Conversation[]>([]);
-    // const conversations = axios.get('/api/conversations')
-    //     .then((response) => {
-    //         setChannels(response.data.filter((conversation: Conversation) => conversation.isChannel === true));
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('/api/conversations/channels');
+                const channelData = response.data.filter((conversation: Conversation) => conversation.isChannel === true);
+                setChannels(channelData);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <Sheet>
@@ -69,51 +81,27 @@ const ChannelsSheet = () => {
                             <NewChannelSheet
                                 show={showNewChannelSheet}
                                 onClose={() => setShowNewChannelSheet(false)}
+                                setChannels={setChannels}
                             />
                         </div>
                     </div>
                 </SheetHeader>
-                <div className="text-center w-[350px]">
-                    <h4 className="text-[1.1875rem] m-5">Stay updated on your favourite topics</h4>
-                    <p className="text-muted-foreground text-[1.0625rem] mb-5">Find channels to follow below</p>
-                </div>
-
-                <div>
-                    <div className="flex justify-center">
-                        <button className="flex flex-col w-[112px] h-[144.8px] m-1 items-center content-center border-[1px] rounded-xl p-2 justify-center">
-                            <div className="flex flex-col items-center relative">
-                                <Avatar className="w-16 h-16">
-                                    <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                <img src="/images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
-
-                                <h4 className="text-[0.8125rem]">The Atlantic</h4>
-                                <p className="text-muted-foreground text-[0.875rem]">Follow</p>
-                            </div>
-                        </button>
-                        <button className="flex flex-col w-[112px] h-[144.8px] m-1 items-center content-center border-[1px] rounded-xl p-2 justify-center">
-                            <div className="flex flex-col items-center relative">
-                                <Avatar className="w-16 h-16">
-                                    <AvatarImage src="https://github.com/shadcn.png" />
-                                    <AvatarFallback>CN</AvatarFallback>
-                                </Avatar>
-                                <img src="/images/Verified.svg" className="absolute top-12 left-12 rounded-full bg-white" />
-
-                                <h4 className="text-[0.8125rem]">The Atlantic</h4>
-                                <p className="text-muted-foreground text-[0.875rem]">Follow</p>
-                            </div>
-                        </button>
+                <ScrollArea className="h-[520px]">
+                    <div className="flex flex-wrap justify-center">
+                        <div className="text-center w-[350px]">
+                            <h4 className="text-[1.1875rem] m-5">Stay updated on your favourite topics</h4>
+                            <p className="text-muted-foreground text-[1.0625rem] mb-5">Find channels to follow below</p>
+                        </div>
+                        {channels.map((channel, index) => (
+                            <ChannelBox
+                                key={index}
+                                channel={channel}
+                                currentUserPrisma={currentUserPrisma}
+                            />
+                        ))}
                     </div>
+                </ScrollArea>
 
-                </div>
-                {channels.map((conversation, index) => (
-                    <ChannelBox
-                        key={index}
-                        name={conversation.name || ""}
-                        profileImageUrl={"https://github.com/shadcn.png"}
-                    />
-                ))}
             </SheetContent>
         </Sheet>
     )

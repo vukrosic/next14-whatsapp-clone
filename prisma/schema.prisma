@@ -61,6 +61,7 @@ model Conversation {
   createdAt       DateTime @default(now())
   lastMessageAt   DateTime @default(now())
   name            String?
+  description     String?
   profileImageUrl String?
   isGroup         Boolean?
   isChannel       Boolean?

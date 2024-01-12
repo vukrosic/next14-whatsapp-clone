@@ -56,7 +56,7 @@ const UserBox: React.FC<UserBoxProps> = ({
         <LoadingModal />
       )}
       <Separator className="mb-2" />
-      <button
+      <div
         onClick={handleContactClick}
         className="
           w-full 
@@ -102,7 +102,7 @@ const UserBox: React.FC<UserBoxProps> = ({
             </div>
           </div>
         </div> */}
-      </button>
+      </div>
     </>
   );
 }

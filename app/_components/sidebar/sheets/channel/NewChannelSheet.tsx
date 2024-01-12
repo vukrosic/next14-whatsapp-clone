@@ -30,43 +30,49 @@ import axios from "axios"
 import { UploadButton } from "@/lib/uploadthing"
 import { useToast } from "@/components/ui/use-toast"
 import { Toaster } from "@/components/ui/toaster";
+import { Conversation } from "@prisma/client"
 
 interface NewChannelsSheetProps {
     show: boolean;
     onClose: () => void;
+    setChannels: React.Dispatch<React.SetStateAction<Conversation[]>>;
 }
 
 
 const NewChannelSheet = ({
     show,
-    onClose
+    onClose,
+    setChannels
 }: NewChannelsSheetProps) => {
     const [imageUrl, setImageUrl] = React.useState("");
     const [name, setName] = React.useState("");
     const [description, setDescription] = React.useState("");
-    const [disableButton, setDisableButton] = React.useState(false);
+    const [disableSubmitButton, setDisableSubmitButton] = React.useState(false);
 
     const { toast } = useToast()
 
     const handleCreateChannel = () => {
-        setDisableButton(true);
+        setDisableSubmitButton(true);
         toast({
             title: "Creating new channel...",
             duration: 30000,
         })
         axios.post('/api/conversations/channels', {
             name: name,
-            description: description
+            description: description,
+            profileImageUrl: imageUrl,
         })
             .then((response) => {
                 console.log("Created new channel in NewChannelSheet")
-                console.log(response);
+                console.log(response.data);
                 toast({
                     title: "New channel created!",
                     className: "bg-green-500",
                     duration: 2000,
                 })
-                setDisableButton(false);
+                setDisableSubmitButton(false);
+                setChannels((prevChannels: Conversation[]) => [...prevChannels, response.data]);
+                onClose();
             })
             .catch((error) => {
                 console.log(error);
@@ -134,6 +140,7 @@ const NewChannelSheet = ({
                             console.log(err);
                         }}
                         onUploadBegin={() => {
+                            setDisableSubmitButton(true)
                             toast({
                                 title: "Uploading image",
                                 description: "Wait a moment...",
@@ -147,6 +154,7 @@ const NewChannelSheet = ({
                                 duration: 2000,
                             })
                             setImageUrl(res[0].url)
+                            setDisableSubmitButton(false)
                         }}
                     />
                     <Toaster />
@@ -168,7 +176,7 @@ const NewChannelSheet = ({
 
                 </div>
 
-                <Button disabled={name === "" || disableButton} className="flex w-[133.66px] h-[38px] rounded-full m-auto mt-8 bg-primary hover:bg-secondary hover:cursor-pointer]" onClick={handleCreateChannel}>
+                <Button disabled={name === "" || disableSubmitButton} className="flex w-[133.66px] h-[38px] rounded-full m-auto mt-8 bg-primary hover:bg-secondary hover:cursor-pointer]" onClick={handleCreateChannel}>
                     Create Channel
                 </Button>
             </SheetContent>

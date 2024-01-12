@@ -5,6 +5,7 @@ import { getCurrentUser } from "@/app/actions/getCurrentUser";
 
 import { pusherServer } from "@/app/libs/pusher";
 import { removePlusSign } from "@/app/utils/phoneNumberUtils";
+import { User } from "@prisma/client";
 
 export async function GET() {
     try {
@@ -16,12 +17,15 @@ export async function GET() {
 
         const conversations = await db.conversation.findMany({
             orderBy: {
-                lastMessageAt: 'desc',
+                name: 'asc'
             },
             where: {
                 userIds: {
                     has: currentUserPrisma.id
                 }
+            },
+            include: {
+                users: true,
             }
         });
 
@@ -54,6 +58,7 @@ export async function POST(
         const newConversation = await db.conversation.create({
             data: {
                 name,
+                description,
                 isGroup: true,
                 isChannel: true,
                 profileImageUrl,
@@ -72,7 +77,7 @@ export async function POST(
         });
 
         // Update all connections with new conversation
-        newConversation.users.forEach((user) => {
+        newConversation.users.forEach((user: User) => {
             if (user.phoneNumber) {
                 pusherServer.trigger(removePlusSign(user.phoneNumber), 'conversation:new', newConversation);
             }
