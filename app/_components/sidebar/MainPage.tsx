@@ -4,7 +4,7 @@ import DesktopSidebarHeader from './DesktopSidebarHeader';
 import MobileFooter from './MobileFooter';
 import ConversationList from '@/app/conversations/_components/ConversationList';
 import getConversations from '@/app/actions/getConversations';
-import getUsers from '@/app/actions/getUsers';
+import getContacts from '@/app/actions/getContacts';
 import { Input } from '@/components/ui/input';
 
 
@@ -12,11 +12,10 @@ async function MainPage({ children }: {
   children: React.ReactNode,
 }) {
   const {
-    currentUserPrisma,
-    currentUserClerk
+    currentUserPrisma
   } = await getCurrentUser();
   const conversations = await getConversations();
-  const users = await getUsers();
+  const contacts = await getContacts();
 
   return (
     <div className="h-full w-screen flex">
@@ -24,10 +23,10 @@ async function MainPage({ children }: {
         <DesktopSidebarHeader
           currentUser={currentUserPrisma!}
           conversations={conversations}
-          users={users}
+          users={contacts}
         />
         <ConversationList
-          users={users}
+          users={contacts}
           title="Messages"
           initialItems={conversations}
         />

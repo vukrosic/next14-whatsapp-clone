@@ -8,7 +8,7 @@ import useConversation from "./useConversation";
 import ChatIcon from '/public/images/omg.svg';
 import CommunitiesSheet from "@/app/_components/sidebar/sheets/CommunitiesSheet";
 import StatusSheet from "@/app/_components/sidebar/sheets/status/StatusSheet";
-import ChannelsSheet from "@/app/_components/sidebar/sheets/ChannelsSheet";
+import ChannelsSheet from "@/app/_components/sidebar/sheets/channel/ChannelsSheet";
 import NewChatSheet from "@/app/_components/sidebar/sheets/NewChatSheet";
 
 

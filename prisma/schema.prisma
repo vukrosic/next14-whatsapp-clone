@@ -57,14 +57,18 @@ model Community {
 }
 
 model Conversation {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt     DateTime @default(now())
-  lastMessageAt DateTime @default(now())
-  name          String?
-  isGroup       Boolean?
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt       DateTime @default(now())
+  lastMessageAt   DateTime @default(now())
+  name            String?
+  profileImageUrl String?
+  isGroup         Boolean?
+  isChannel       Boolean?
 
   messagesIds String[]  @db.ObjectId
   messages    Message[]
+
+  ownerId String @db.ObjectId
 
   userIds String[] @db.ObjectId
   users   User[]   @relation(fields: [userIds], references: [id])

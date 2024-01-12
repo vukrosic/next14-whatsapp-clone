@@ -16,10 +16,11 @@ import ProfileDrawer from "./ProfileDrawer";
 interface HeaderProps {
   conversation: Conversation & {
     users: User[]
-  }
+  },
+  user?: User
 }
 
-const Header: React.FC<HeaderProps> = ({ conversation }) => {
+const Header: React.FC<HeaderProps> = ({ conversation, user }) => {
   const otherUser = useOtherUser(conversation);
   const [drawerOpen, setDrawerOpen] = useState(false);
 

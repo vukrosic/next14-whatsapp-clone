@@ -10,10 +10,10 @@ import CommunitiesDrawer from "./sheets/CommunitiesSheet";
 import StatusDrawer from "./sheets/status/StatusSheet";
 import CommunitiesSheet from "./sheets/CommunitiesSheet";
 import StatusSheet from "./sheets/status/StatusSheet";
-import ChannelsSheet from "./sheets/ChannelsSheet";
+import ChannelsSheet from "./sheets/channel/ChannelsSheet";
 import NewChatSheet from "./sheets/NewChatSheet";
 import ProfileSheet from "./sheets/ProfileSheet";
-import NewChannelSheet from "./sheets/NewChannelSheet";
+import NewChannelSheet from "./sheets/channel/NewChannelSheet";
 import FindChannelsSheet from "./sheets/FindChannelsSheet";
 import {
   DropdownMenu,

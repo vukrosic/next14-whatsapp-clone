@@ -5,25 +5,25 @@ import { NextResponse } from "next/server";
 
 const getContacts = async () => {
     const { currentUserPrisma, currentUserClerk } = await getCurrentUser();
-    console.log("1111111111111111111111111")
 
     if (!currentUserPrisma) return ([])
 
-    return ([])
-
-    // const userContacts = await db.contact.findMany({
-    //     where: {
-    //         userId: currentUserPrisma.id
-    //     },
-    //     include: {
-    //         contact: true,
-    //     }
-    // });
-    // console.log("userContacts: \n \n", userContacts)
-
-    // return userContacts;
-
-
+    const userContacts = await db.user.findMany({
+        where: {
+            id: currentUserPrisma.id
+        },
+        include: {
+            following: true,
+            followedBy: true,
+        }
+    });
+    // joined list of following and followedBy withou duplicates
+    const contactsList = [...userContacts[0].following, ...userContacts[0].followedBy].filter((contact, index, self) => {
+        return index === self.findIndex((t) => (
+            t.id === contact.id
+        ))
+    })
+    return contactsList;
 }
 
 export default getContacts;

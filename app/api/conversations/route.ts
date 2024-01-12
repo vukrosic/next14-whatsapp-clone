@@ -1,17 +1,43 @@
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-import {getCurrentUser} from "@/app/actions/getCurrentUser";
+import { getCurrentUser } from "@/app/actions/getCurrentUser";
 
 import { pusherServer } from "@/app/libs/pusher";
 import { removePlusSign } from "@/app/utils/phoneNumberUtils";
 
+export async function GET() {
+  try {
+    const { currentUserPrisma } = await getCurrentUser();
+
+    if (!currentUserPrisma?.id) {
+      return new NextResponse('Unauthorized', { status: 400 });
+    }
+
+    const conversations = await db.conversation.findMany({
+      orderBy: {
+        lastMessageAt: 'desc',
+      },
+      where: {
+        userIds: {
+          has: currentUserPrisma.id
+        }
+      }
+    });
+
+    return NextResponse.json(conversations);
+  } catch (error) {
+    return new NextResponse('Internal Error', { status: 500 });
+  }
+}
+
+
 
 export async function POST(
-request: Request,
+  request: Request,
 ) {
   try {
-    const {currentUserPrisma, currentUserClerk} = await getCurrentUser();
+    const { currentUserPrisma, currentUserClerk } = await getCurrentUser();
 
     const body = await request.json();
     const {
@@ -38,10 +64,11 @@ request: Request,
         data: {
           name,
           isGroup,
+          ownerId: currentUserPrisma.id,
           users: {
             connect: [
-              ...members.map((member: { value: string }) => ({  
-                id: member.value 
+              ...members.map((member: { value: string }) => ({
+                id: member.value
               })),
               {
                 id: currentUserPrisma.id
@@ -54,7 +81,7 @@ request: Request,
         }
       });
 
-       // Update all connections with new conversation
+      // Update all connections with new conversation
       newConversation.users.forEach((user) => {
         if (user.phoneNumber) {
           pusherServer.trigger(removePlusSign(user.phoneNumber), 'conversation:new', newConversation);
@@ -90,6 +117,7 @@ request: Request,
 
     const newConversation = await db.conversation.create({
       data: {
+        ownerId: currentUserPrisma.id,
         users: {
           connect: [
             {

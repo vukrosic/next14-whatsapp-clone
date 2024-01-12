@@ -2,12 +2,11 @@ import { db } from "@/lib/db";
 import { getCurrentUser } from "./getCurrentUser";
 
 const getConversations = async () => {
-    const { currentUserPrisma } = await getCurrentUser();
+  const { currentUserPrisma } = await getCurrentUser();
 
   if (!currentUserPrisma?.id) {
     return [];
   }
-
   try {
     const conversations = await db.conversation.findMany({
       orderBy: {
@@ -28,9 +27,9 @@ const getConversations = async () => {
         },
       }
     });
-
     return conversations;
   } catch (error: any) {
+    console.log(error);
     return [];
   }
 };
