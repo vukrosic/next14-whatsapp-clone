@@ -8,9 +8,9 @@ import StatusDrawer from "./sheets/status/StatusSheet";
 import StatusSheet from "./sheets/status/StatusSheet";
 import ChannelsSheet from "./sheets/channel/ChannelsSheet";
 import NewChatSheet from "./sheets/NewChatSheet";
-import ProfileSheet from "./sheets/ProfileSheet";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 import NewChannelSheet from "./sheets/channel/NewChannelSheet";
+import { UserButton } from "@clerk/nextjs";
 
 import {
   DropdownMenu,
@@ -60,7 +60,7 @@ const DesktopSidebarHeader: React.FC<DesktopSidebarHeaderProps> = ({
             onClick={() => setIsOpen(true)}
             className="flex items-center cursor-pointer hover:opacity-75 transition mt-2 ml-2"
           >
-            <ProfileSheet currentUser={currentUser} />
+            <UserButton />
           </div>
         </nav>
         <nav className="flex justify-between space-x-5 mr-4 items-center">

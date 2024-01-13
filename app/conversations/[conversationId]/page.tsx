@@ -1,11 +1,16 @@
 import getConversationById from "@/app/actions/getConversationById";
 import getMessages from "@/app/actions/getMessages";
 
-import Header from "./_components/Header";
-import Body from "./_components/Body";
-import Form from "./_components/Form";
 import EmptyState from "@/app/_components/EmptyState";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
+import Conversation from "./_components/Conversation";
+
+interface IParams {
+  conversationId: string;
+  searchParams: {
+    video?: boolean;
+  }
+}
 
 interface IParams {
   conversationId: string;
@@ -14,6 +19,7 @@ interface IParams {
 const ChatId = async ({ params }: { params: IParams }) => {
   const conversation = await getConversationById(params.conversationId);
   const messages = await getMessages(params.conversationId);
+
   const { currentUserPrisma } = await getCurrentUser();
 
   if (!conversation) {
@@ -27,15 +33,11 @@ const ChatId = async ({ params }: { params: IParams }) => {
   }
 
   return (
-    <div className="h-full w-full">
-      <div className="h-full w-full flex flex-col bg-red-500">
-        <Header conversation={conversation} currentUserPrisma={currentUserPrisma} />
-        <Body initialMessages={messages} />
-        {(conversation.isChannel
-          && conversation.ownerId !== currentUserPrisma.id)
-          ? null : (<Form />)}
-      </div>
-    </div>
+    <Conversation
+      conversation={conversation}
+      currentUserPrisma={currentUserPrisma}
+      messages={messages}
+    />
   );
 }
 

@@ -13,6 +13,8 @@ import AvatarGroup from "@/app/_components/AvatarGroup";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
+import { Mic, Phone } from 'lucide-react';
+import { CallButton } from './CallButton';
 
 // import ProfileDrawer from "./ProfileDrawer";
 
@@ -20,10 +22,12 @@ interface HeaderProps {
   conversation: Conversation & {
     users: User[]
   },
-  currentUserPrisma: User
+  currentUserPrisma: User,
+  isInCall: boolean
+  setIsInCall: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma }) => {
+const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma, isInCall, setIsInCall }) => {
   const [disableFollowButton, setDisableFollowButton] = useState(false);
   const otherUser = useOtherUser(conversation);
   // const [drawerOpen, setDrawerOpen] = useState(false);
@@ -54,7 +58,6 @@ const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma }) => {
       console.log(error);
     })
   }
-
 
   return (
     <>
@@ -118,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma }) => {
             </div>
           ) : (
             // Code for direct message case
-            <div className='flex'>
+            <div className='flex w-full items-center'>
               <Avatar>
                 <AvatarImage src={otherUser.profileImageUrl || undefined} />
                 <AvatarFallback>CN</AvatarFallback>
@@ -129,21 +132,15 @@ const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma }) => {
                   {statusText}
                 </div>
               </div>
+              <div className='ml-auto'>
+                <CallButton
+                  isInCall={isInCall}
+                  setIsInCall={setIsInCall}
+                />
+              </div>
             </div>
           )}
-
-
         </div>
-        {/* <HiEllipsisHorizontal
-          size={32}
-          onClick={() => setDrawerOpen(true)}
-          className="
-          text-sky-500
-          cursor-pointer
-          hover:text-sky-600
-          transition
-        "
-        /> */}
       </div >
     </>
   );

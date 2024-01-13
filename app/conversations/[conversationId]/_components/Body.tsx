@@ -8,12 +8,16 @@ import useConversation from "@/app/hooks/useConversation";
 import MessageBox from "./MessageBox";
 import { FullMessageType } from "@/app/types";
 import { find } from "lodash";
+import { MediaRoom } from "@/app/_components/MediaRoom";
+import Form from "./Form";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
+  isInCall: boolean;
+  showForm: boolean;
 }
 
-const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
+const Body: React.FC<BodyProps> = ({ initialMessages = [], isInCall, showForm }) => {
   const bottomRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState(initialMessages);
 
@@ -65,14 +69,27 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [] }) => {
 
   return (
     <div className="flex-1 overflow-y-auto bg-pink-100">
-      {messages.map((message, i) => (
-        <MessageBox
-          isLast={i === messages.length - 1}
-          key={message.id}
-          data={message}
-          prevMsgIsOwn={messages[i - 1]?.sender?.phoneNumber === message.sender?.phoneNumber}
+      {isInCall && (
+        <MediaRoom
+          chatId={conversationId}
+          video={true}
+          audio={true}
         />
-      ))}
+      )}
+
+      {!isInCall && (
+        <>
+          {messages.map((message, i) => (
+            <MessageBox
+              isLast={i === messages.length - 1}
+              key={message.id}
+              data={message}
+              prevMsgIsOwn={messages[i - 1]?.sender?.phoneNumber === message.sender?.phoneNumber}
+            />
+          ))}
+        </>
+      )}
+
       <div className="pt-24" ref={bottomRef} />
     </div>
   );

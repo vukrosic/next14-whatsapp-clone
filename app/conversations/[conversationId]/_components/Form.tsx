@@ -21,6 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import EmojiPicker from "./EmojiPicker";
 
 
 const Form = () => {
@@ -30,6 +31,7 @@ const Form = () => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: {
       errors,
     }
@@ -54,6 +56,12 @@ const Form = () => {
     })
   }
 
+  const handleEmojiChange = (emojiValue: string) => {
+    // Handle emoji change and set the emoji value to the form field
+    setValue('message', `${getValues('message')}${emojiValue}`);
+    //setValue('message', (previousValue: any) => previousValue + emojiValue, { shouldValidate: true });
+  };
+
   return (
     <div
       className="
@@ -68,18 +76,11 @@ const Form = () => {
         w-full
       "
     >
-      {/* <CldUploadButton 
-        options={{ maxFiles: 1 }} 
-        onUpload={handleUpload} 
-        uploadPreset="pgc9ehd5"
-      >
-        <HiPhoto size={30} className="text-sky-500" />
-      </CldUploadButton> */}
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex items-center gap-2 lg:gap-4 w-full"
       >
-        <img src="/images/Emoji.svg" alt="Emoji" width={24} height={24} />
+        <EmojiPicker onChange={handleEmojiChange} />
         <DropdownMenu>
           <DropdownMenuTrigger>
             <button id="rotateButton" className="transform animate-spin duration-300">
