@@ -5,7 +5,8 @@ const nextConfig = {
             'img.clerk.com',
             'avatars.githubusercontent.com',
             'lh3.googleusercontent.com',
-            'uploadthing.com'
+            'uploadthing.com',
+            'utfs.io'
         ],
     },
 }

@@ -24,12 +24,15 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [], isInCall, showForm })
   const { conversationId } = useConversation();
 
   useEffect(() => {
-    axios.post(`/api/conversations/${conversationId}/seen`);
-  }, [conversationId]);
+    // Scroll to the bottom on new message
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   useEffect(() => {
+    axios.post(`/api/conversations/${conversationId}/seen`);
+  }, [conversationId]);
+  useEffect(() => {
     pusherClient.subscribe(conversationId)
-    bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
       axios.post(`/api/conversations/${conversationId}/seen`);
@@ -41,8 +44,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [], isInCall, showForm })
 
         return [...current, message]
       });
-
-      bottomRef?.current?.scrollIntoView();
     };
 
     const updateMessageHandler = (newMessage: FullMessageType) => {
@@ -54,6 +55,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [], isInCall, showForm })
         return currentMessage;
       }))
     };
+
 
     // executes on mount or when conversationId changes
     pusherClient.bind('messages:new', messageHandler)
@@ -78,7 +80,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [], isInCall, showForm })
       )}
 
       {!isInCall && (
-        <>
+        <div className="pt-24">
           {messages.map((message, i) => (
             <MessageBox
               isLast={i === messages.length - 1}
@@ -87,10 +89,10 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [], isInCall, showForm })
               prevMsgIsOwn={messages[i - 1]?.sender?.phoneNumber === message.sender?.phoneNumber}
             />
           ))}
-        </>
+        </div>
       )}
 
-      <div className="pt-24" ref={bottomRef} />
+      <div ref={bottomRef} />
     </div>
   );
 }

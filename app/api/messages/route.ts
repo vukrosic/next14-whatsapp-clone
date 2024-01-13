@@ -67,7 +67,6 @@ export async function POST(
 
     // this adds the message to the UI
     await pusherServer.trigger(conversationId, 'messages:new', newMessage);
-    console.log("newMessage", newMessage)
 
     const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
 

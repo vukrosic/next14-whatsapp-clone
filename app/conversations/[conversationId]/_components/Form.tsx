@@ -12,17 +12,9 @@ import {
 } from "react-hook-form";
 import axios from "axios";
 import useConversation from "@/app/hooks/useConversation";
-import FileUpload from "@/app/_components/FileUpload";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import EmojiPicker from "./EmojiPicker";
-
+import { Plus } from "lucide-react";
+import UploadFileButton from "./UploadFileButton";
 
 const Form = () => {
   const { conversationId } = useConversation();
@@ -49,17 +41,9 @@ const Form = () => {
     })
   }
 
-  const handleUpload = (result: any) => {
-    axios.post('/api/messages', {
-      image: result.info.secure_url,
-      conversationId: conversationId
-    })
-  }
 
   const handleEmojiChange = (emojiValue: string) => {
-    // Handle emoji change and set the emoji value to the form field
     setValue('message', `${getValues('message')}${emojiValue}`);
-    //setValue('message', (previousValue: any) => previousValue + emojiValue, { shouldValidate: true });
   };
 
   return (
@@ -81,40 +65,9 @@ const Form = () => {
         className="flex items-center gap-2 lg:gap-4 w-full"
       >
         <EmojiPicker onChange={handleEmojiChange} />
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <button id="rotateButton" className="transform animate-spin duration-300">
-              <img src="/images/PlusDark.svg" alt="Plus" className="rotate-0" />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="shadow-gray-700 shadow-lg text-gray-800">
-            <DropdownMenuItem className="p-3">
-              <img src="/images/DocumentIcon.svg" />
-              <p className="pl-2">Document</p>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-3">
-              <img src="/images/PhotosIcon.svg" />
-              <p className="pl-2">Photos & Videos</p>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-3">
-              <img src="/images/CameraIcon.svg" />
-              <p>Camera</p>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-3">
-              <img src="/images/ContactIcon.svg" />
-              <p>Contact</p>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-3">
-              <img src="/images/PollIcon.svg" />
-              <p>Poll</p>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="p-3">
-              <img src="/images/NewStickerIcon.svg" />
-              <p>New Sticker</p>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
 
+
+        <UploadFileButton conversationId={conversationId} />
 
         <MessageInput
           id="message"

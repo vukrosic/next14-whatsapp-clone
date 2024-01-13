@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
     Sheet,
     SheetClose,
@@ -12,20 +11,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import useActiveList from "@/app/hooks/useActiveList"
-import { getCurrentUser } from "@/app/actions/getCurrentUser"
-import Image from "next/image"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Textarea } from "@/components/ui/textarea"
-import EmojiPicker from 'emoji-picker-react';
 import axios from "axios"
 import { UploadButton } from "@/lib/uploadthing"
 import { useToast } from "@/components/ui/use-toast"
