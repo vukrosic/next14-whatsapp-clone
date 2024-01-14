@@ -4,22 +4,12 @@ import {
     Sheet,
     SheetClose,
     SheetContent,
-    SheetDescription,
-    SheetFooter,
     SheetHeader,
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Image from "next/image"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import ChannelBox from "./ChannelBox"
 import axios from "axios"
 import { Conversation, User } from "@prisma/client"
@@ -64,20 +54,8 @@ const ChannelsSheet = ({
                         </SheetClose>
                         <SheetTitle className="text-white flex items-center justify-center ">Channels</SheetTitle>
                         <div className="flex ml-auto">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger>
-                                    <img src="/images/Plus.svg" className="p-2 cursor-pointer mr-4" />
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                    <DropdownMenuItem
-                                        className="p-4 cursor-pointer"
-                                        onClick={() => setShowNewChannelSheet(true)}
-                                    >
-                                        New Channel
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem className="p-4 cursor-pointer">Find channels</DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            <img src="/images/Plus.svg" className="p-2 cursor-pointer mr-4" onClick={() => setShowNewChannelSheet(true)} />
+
                             <NewChannelSheet
                                 show={showNewChannelSheet}
                                 onClose={() => setShowNewChannelSheet(false)}

@@ -4,25 +4,22 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useState, useMemo } from "react";
 import { format } from "date-fns";
-import { useSession } from "@clerk/nextjs";
+import { useSession, useClerk } from "@clerk/nextjs";
 import { FullMessageType } from "@/app/types";
 
 interface MessageBoxProps {
   data: FullMessageType;
   isLast?: boolean;
-  prevMsgIsOwn?: boolean;
 }
 
 const MessageBox: React.FC<MessageBoxProps> = ({
   data,
-  isLast,
-  prevMsgIsOwn
+  isLast
 }) => {
-  const session = useSession().session;
-  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const user = useClerk().user
 
+  const isOwn = user?.phoneNumbers?.[0]?.phoneNumber === data?.sender?.phoneNumber
 
-  const isOwn = session?.user.primaryPhoneNumber?.phoneNumber === data?.sender?.phoneNumber
   const seenList = (data.seen || [])
     .filter((user) => user.phoneNumber !== data?.sender?.phoneNumber)
     .map((user) => user.username)
@@ -50,25 +47,12 @@ const MessageBox: React.FC<MessageBoxProps> = ({
           isOwn ? 'bg-[#d1f4cc] text-black' : 'bg-gray-100',
           data.image ? 'rounded-[3px]' : 'rounded-[7px] py-2 px-3 shadow-lg shadow-gray-300 shadow-bottom'
         )}>
-
-
-
-          {/* <ImageModal src={data.image} isOpen={imageModalOpen} onClose={() => setImageModalOpen(false)} /> */}
           {data.image ? (
             <Image
               alt="Image"
               height="288"
               width="288"
-              onClick={() => setImageModalOpen(true)}
               src={data.image}
-              className="
-                object-cover 
-                cursor-pointer 
-                hover:scale-110 
-                transition 
-                translate
-                text-sm
-              "
             />
           ) : (
             <div className="flex flex-col relative max-w-[600px]">

@@ -4,15 +4,14 @@ import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Conversation, Message, User } from "@prisma/client";
 import { format } from "date-fns";
-import { useSession } from "@clerk/nextjs";
+import { useSession, useClerk } from "@clerk/nextjs";
 import clsx from "clsx";
 
-import Avatar from "@/app/_components/Avatar";
 import useOtherUser from "@/app/hooks/useOtherUser";
-import AvatarGroup from "@/app/_components/AvatarGroup";
 import { FullConversationType } from "@/app/types";
 
 import { Separator } from "@/components/ui/separator"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 
 interface ConversationBoxProps {
@@ -25,7 +24,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
   selected
 }) => {
   const otherUser = useOtherUser(data);
-  const session = useSession();
+  const clerkUser = useClerk().user;
   const router = useRouter();
 
   const handleClick = useCallback(() => {
@@ -38,8 +37,8 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
     return messages[messages.length - 1];
   }, [data.messages]);
 
-  const userEmail = useMemo(() => session.session?.user.phoneNumbers[0].phoneNumber,
-    [session.session?.user.phoneNumbers[0].phoneNumber]);
+  const userEmail = useMemo(() => clerkUser?.phoneNumbers[0].phoneNumber,
+    [clerkUser?.phoneNumbers[0].phoneNumber]);
 
   const hasSeen = useMemo(() => {
     if (!lastMessage) {
@@ -86,9 +85,15 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
         )}
       >
         {data.isGroup ? (
-          <AvatarGroup users={data.users} />
+          <Avatar>
+            <AvatarImage src='/images/GroupPurple.svg' />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
         ) : (
-          <Avatar user={otherUser} />
+          <Avatar>
+            <AvatarImage src={clerkUser?.imageUrl || undefined} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
         )}
         <div className="min-w-0 flex-1">
           <div className="focus:outline-none">

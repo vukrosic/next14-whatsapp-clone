@@ -86,7 +86,6 @@ const Body: React.FC<BodyProps> = ({ initialMessages = [], isInCall, showForm })
               isLast={i === messages.length - 1}
               key={message.id}
               data={message}
-              prevMsgIsOwn={messages[i - 1]?.sender?.phoneNumber === message.sender?.phoneNumber}
             />
           ))}
         </div>

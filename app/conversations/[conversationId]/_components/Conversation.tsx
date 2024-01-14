@@ -20,8 +20,7 @@ const Conversation = ({
     messages
 }: ConversationProps) => {
     const [isInCall, setIsInCall] = useState(false);
-    console.log("conversation.isChannel: ", conversation.isChannel)
-    console.log("conversation.ownerId !== currentUserPrisma.id: ", conversation.ownerId !== currentUserPrisma.id)
+
     return (
         <div className="h-full w-full">
             <div className="h-full w-full flex flex-col bg-red-500">

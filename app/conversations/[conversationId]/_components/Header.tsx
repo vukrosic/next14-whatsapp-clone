@@ -1,22 +1,16 @@
 'use client';
 
-import { HiChevronLeft } from 'react-icons/hi'
-import { HiEllipsisHorizontal } from 'react-icons/hi2';
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { Conversation, User } from "@prisma/client";
 
 import useOtherUser from "@/app/hooks/useOtherUser";
 import useActiveList from "@/app/hooks/useActiveList";
 
-import AvatarGroup from "@/app/_components/AvatarGroup";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
-import { Mic, Phone } from 'lucide-react';
 import { CallButton } from './CallButton';
-
-// import ProfileDrawer from "./ProfileDrawer";
+import { useClerk } from "@clerk/nextjs";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -30,7 +24,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma, isInCall, setIsInCall }) => {
   const [disableFollowButton, setDisableFollowButton] = useState(false);
   const otherUser = useOtherUser(conversation);
-  // const [drawerOpen, setDrawerOpen] = useState(false);
+  const { user } = useClerk();
 
   const { members } = useActiveList();
   const isActive = members.indexOf(otherUser?.phoneNumber!) !== -1;
@@ -61,11 +55,6 @@ const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma, isInCa
 
   return (
     <>
-      {/* <ProfileDrawer
-        data={conversation}
-        isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-      /> */}
       <div
         className="
         bg-white 
@@ -85,7 +74,10 @@ const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma, isInCa
           {conversation.isGroup ? (
             // Code for group case
             <div className='flex'>
-              <AvatarGroup users={conversation.users} />
+              <Avatar>
+                <AvatarImage src='/images/GroupPurple.svg' />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
               <div className="flex flex-col ml-2">
                 <div>{conversation.name}</div>
                 <div className="text-sm font-light text-neutral-500">
@@ -123,7 +115,7 @@ const Header: React.FC<HeaderProps> = ({ conversation, currentUserPrisma, isInCa
             // Code for direct message case
             <div className='flex w-full items-center'>
               <Avatar>
-                <AvatarImage src={otherUser.profileImageUrl || undefined} />
+                <AvatarImage src={user?.imageUrl} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div className="flex flex-col ml-2">
