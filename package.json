@@ -33,7 +33,7 @@
     "axios": "^1.6.3",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.0.0",
+    "clsx": "^2.1.0",
     "date-fns": "^3.0.6",
     "emoji-mart": "^5.5.2",
     "emoji-picker-react": "^4.6.0",

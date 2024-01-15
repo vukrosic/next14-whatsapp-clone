@@ -3,7 +3,6 @@
 import DesktopItem from "./DesktopItem";
 import { useState } from "react";
 import { Conversation, User } from "@prisma/client";
-import Avatar from "../Avatar";
 import StatusDrawer from "./sheets/status/StatusSheet";
 import StatusSheet from "./sheets/status/StatusSheet";
 import ChannelsSheet from "./sheets/channel/ChannelsSheet";

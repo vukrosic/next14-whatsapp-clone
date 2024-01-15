@@ -1,4 +1,4 @@
-import MainPage from "../_components/sidebar/MainPage";
+import MainPage from "../_components/sidebar/Sidebar";
 import getUsers from "../actions/getUsers";
 
 import UserList from "./_components/UserList";

@@ -26,9 +26,7 @@ async function MainPage({ children }: {
           users={contacts}
         />
         <ConversationList
-          users={contacts}
-          title="Messages"
-          initialItems={conversations}
+          conversations={conversations}
         />
       </aside>
       <main className='w-full flex justify-center'>

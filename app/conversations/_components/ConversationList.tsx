@@ -17,25 +17,15 @@ import { removePlusSign } from "@/app/utils/phoneNumberUtils";
 import { Input } from "@/components/ui/input";
 
 interface ConversationListProps {
-  initialItems: FullConversationType[];
-  users: User[];
-  title?: string;
+  conversations: FullConversationType[];
 }
 
 const ConversationList: React.FC<ConversationListProps> = ({
-  initialItems,
-  users
+  conversations,
 }) => {
-  const [items, setItems] = useState(initialItems);
+  const [items, setItems] = useState(conversations);
 
-  const [isFilterActivated, setIsFilterActivated] = useState(false);
   const [searchText, setSearchText] = useState("");
-
-  const filterImageSrc = isFilterActivated ? '/images/FilterWhite.svg' : '/images/Filter.svg';
-
-  const handleFilterClick = () => {
-    setIsFilterActivated(!isFilterActivated);
-  };
 
 
 
@@ -111,13 +101,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
               className="bg-transparent border-0"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
-            />
-          </div>
-          <div className={` rounded-full flex items-center justify-center mr-2 ml-2 ${isFilterActivated ? 'bg-primary' : ''}`}>
-            <img
-              src={filterImageSrc}
-              className='mr-3 ml-3'
-              onClick={handleFilterClick}
             />
           </div>
         </div>

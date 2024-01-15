@@ -1,6 +1,6 @@
 import getConversations from "../actions/getConversations";
 import getUsers from "../actions/getUsers";
-import MainPage from "@/app/_components/sidebar/MainPage";
+import MainPage from "@/app/_components/sidebar/Sidebar";
 import ConversationList from "./_components/ConversationList";
 
 export default async function ConversationsLayout({
